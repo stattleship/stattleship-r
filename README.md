@@ -22,6 +22,7 @@ sport = "basketball"
 ep = "players"
 q_body = list()
 players = stattle(TOKEN, sport=sport, league=league, ep=ep, query=q_body, version=1, verbose=TRUE, walk=TRUE)
+players_df = do.call("rbind", lapply(players, function(x) x$players))
 ```
 
 Get all triple doubles this NBA season:

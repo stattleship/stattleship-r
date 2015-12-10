@@ -37,6 +37,7 @@ stattle = function(token,
                    walk=F,
                    page=NA,
                    verbose=F) {
+  
   ## if na, set page to 1 for consistency
   if (is.na(page)) page = 1
   
@@ -94,7 +95,7 @@ stattle = function(token,
 }
 
 
-.queryAPI <- function(token, 
+.queryAPI = function(token, 
                     sport="hockey", 
                     league = "nhl", 
                     ep="stats", 
@@ -103,6 +104,9 @@ stattle = function(token,
                     walk=F,
                     page=NA,
                     verbose=F) {
+  
+  ## packages :  doesnt feel like this is the right way to do it
+  library(httr)
   
   ## build the URL and the endpoint
   URL = sprintf("https://www.stattleship.com/%s/%s/%s", sport, league, ep)
@@ -115,9 +119,6 @@ stattle = function(token,
     query = c(query, page=page)
   }
   
-  ## test the body to see if it is a list and has values
-  ## if not, just return an empty list
-  ## todo: test to ensure that query is a list if !is.na
   ## get the request from the API
   resp = GET(URL,
              add_headers(Authorization =TOKEN, 
@@ -125,14 +126,11 @@ stattle = function(token,
                          `Content-Type`="application/json"), 
              query=query)
   
-  ## walk the content if true
-  
   ## convert response to text first, do not use baseline httr::content default
   api_response = content(resp, as="text")
   
   ## use jsonlite::fromJSON
   api_response = jsonlite::fromJSON(api_response)
-  
   
   ## if verbose = T, return a list that includes the parsed results
   ## and the original request
@@ -144,4 +142,3 @@ stattle = function(token,
   ## return the data
   return(api_response)
 }
-
