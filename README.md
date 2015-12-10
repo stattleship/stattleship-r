@@ -22,3 +22,4 @@ tripdubs = stattle(TOKEN, sport=sport, league=league, ep=ep, query=q_body, versi
 ```
 
 ## Next Steps
+Want more? Check out our available stats across an expanding number of sports at the [Stattleship Playbook](http://playbook.stattleship.com/).
