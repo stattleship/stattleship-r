@@ -6,9 +6,12 @@ Stattleship R Wrapper brought to you by [@stattleship](https://twitter.com/statt
 `devtools::install_github("stattleship/stattleship-r")`
 
 ## Getting Started
-Obtain an access TOKEN from [stattleship.com](www.stattleship.com). Load R and initialize your TOKEN for your session:
+Obtain an access TOKEN from [stattleship.com](www.stattleship.com). Load R and initialize your TOKEN for your session and load the library:
 
-`TOKEN <- 'insert-your-token-here'`
+```
+library(stattleshipR)
+TOKEN <- 'insert-your-token-here'
+```
 
 Get all NBA players:
 
@@ -19,6 +22,16 @@ sport = "basketball"
 ep = "players"
 q_body = list()
 players = stattle(TOKEN, sport=sport, league=league, ep=ep, query=q_body, version=1, verbose=TRUE, walk=TRUE)
+```
+
+Get all triple doubles this NBA season:
+
+```
+league = "nba"
+sport = "basketball"
+ep = "stats"
+q_body=list(stat="triple_double", type="basketball_doubles_stat")
+tripdubs = stattle(TOKEN, sport=sport, league=league, ep=ep, query=q_body, version=1, walk=T)
 ```
 
 ## Next Steps
