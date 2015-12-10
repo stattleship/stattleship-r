@@ -18,7 +18,7 @@ league = "nba"
 sport = "basketball"
 ep = "players"
 q_body = list()
-players = stattle(TOKEN, sport=sport, league=league, ep=ep, query=q_body, version=1, verbose=T, walk=TRUE)
+players = stattle(TOKEN, sport=sport, league=league, ep=ep, query=q_body, version=1, verbose=TRUE, walk=TRUE)
 ```
 
 ## Next Steps
