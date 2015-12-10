@@ -7,11 +7,13 @@ Stattleship R Wrapper brought to you by [@stattleship](https://twitter.com/statt
 
 ## Getting Started
 Obtain an access TOKEN from [stattleship.com](www.stattleship.com). Load R and initialize your TOKEN for your session:
+
 `TOKEN <- 'insert-your-token-here'`
 
 Get all NBA triple doubles this season:
 
-```library(stattleshipR)
+```
+library(stattleshipR)
 league = "nba"
 sport = "basketball"
 ep = "stats"
