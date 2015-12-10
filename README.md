@@ -10,15 +10,15 @@ Obtain an access TOKEN from [stattleship.com](www.stattleship.com). Load R and i
 
 `TOKEN <- 'insert-your-token-here'`
 
-Get all NBA triple doubles this season:
+Get all NBA players:
 
 ```
 library(stattleshipR)
 league = "nba"
 sport = "basketball"
-ep = "stats"
-q_body=list(stat="triple_double")
-tripdubs = stattle(TOKEN, sport=sport, league=league, ep=ep, query=q_body, version=1, walk=T)
+ep = "players"
+q_body = list()
+players = stattle(TOKEN, sport=sport, league=league, ep=ep, query=q_body, version=1, verbose=T, walk=TRUE)
 ```
 
 ## Next Steps
