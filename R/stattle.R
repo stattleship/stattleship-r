@@ -2,7 +2,6 @@
 #' 
 #' A simple, generic function to query data from the Stattleship API
 #' 
-#' 
 #' @param sport character. The sport, such as hockey, basketball, football
 #' @param league character. NHL, NBA, NFL, etc.
 #' @param ep character. The endpoint
