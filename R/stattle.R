@@ -26,7 +26,7 @@
 #'                    verbose = FALSE)
 #' }
 #' @export
-#' stattle()
+#' stattle
 
 stattle = function(token, 
                    sport="hockey", 
