@@ -8,8 +8,6 @@ stattle(token, sport = "hockey", league = "nhl", ep = "stats",
   query = list(), version = 1, walk = F, page = NA, verbose = F)
 }
 \arguments{
-\item{token}{character. A valid token for the API}
-
 \item{sport}{character. The sport, such as hockey, basketball, football}
 
 \item{league}{character. NHL, NBA, NFL, etc.}
@@ -31,9 +29,8 @@ A simple, generic function to query data from the Stattleship API
 }
 \examples{
 \dontrun{
-TOKEN <- "insert-your-token-here"
-results <- stattle(TOKEN, 
-                   sport="hockey", 
+setToken("insert-your-token-here")
+results <- stattle(sport="hockey", 
                    league="nhl",
                    ep = "stats",
                    query = list()

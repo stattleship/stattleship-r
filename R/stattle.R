@@ -2,7 +2,6 @@
 #' 
 #' A simple, generic function to query data from the Stattleship API
 #' 
-#' @param token character. A valid token for the API
 #' @param sport character. The sport, such as hockey, basketball, football
 #' @param league character. NHL, NBA, NFL, etc.
 #' @param ep character. The endpoint
@@ -14,9 +13,8 @@
 #' 
 #' @examples 
 #' \dontrun{
-#' TOKEN <- "insert-your-token-here"
-#' results <- stattle(TOKEN, 
-#'                    sport="hockey", 
+#' setToken("insert-your-token-here")
+#' results <- stattle(sport="hockey", 
 #'                    league="nhl",
 #'                    ep = "stats",
 #'                    query = list()
@@ -48,7 +46,7 @@ stattle = function(token,
   
   print("Making initial API request")
   ## get the first request
-  tmp = .queryAPI(TOKEN, sport, league, ep, query, verbose=T)
+  tmp = .queryAPI(.StattleEnv$data$token, sport, league, ep, query, verbose=T)
   
   ## simple alert
   if (tmp$response$status_code != 200) {
@@ -73,7 +71,7 @@ stattle = function(token,
     if (pages >= 2) {
       for (p in 2:pages) {
         print(paste0("Retrieving results from page ", p, " of ", pages))
-        tmp_p = .queryAPI(TOKEN, sport, league, ep, query=query, page=p, verbose=T)
+        tmp_p = .queryAPI(.StattleEnv$data$token, sport, league, ep, query=query, page=p, verbose=T)
         
         ## check to make sure 200
         if (tmp$response$status_code != 200) {
@@ -121,7 +119,7 @@ stattle = function(token,
   
   ## get the request from the API
   resp = GET(URL,
-             add_headers(Authorization =TOKEN, 
+             add_headers(Authorization =.StattleEnv$data$token, 
                          Accept = ACCEPT, 
                          `Content-Type`="application/json"), 
              query=query)

@@ -18,18 +18,17 @@ Obtain an access TOKEN from [stattleship.com](www.stattleship.com). Load R and i
 
 ```
 library(stattleshipR)
-TOKEN <- 'insert-your-token-here'
+setToken('insert-your-token-here')
 ```
 
 Get all NBA players:
 
 ```
-library(stattleshipR)
 league = "nba"
 sport = "basketball"
 ep = "players"
 q_body = list()
-players = stattle(TOKEN, sport=sport, league=league, ep=ep, query=q_body, version=1, verbose=TRUE, walk=TRUE)
+players = stattle(sport=sport, league=league, ep=ep, query=q_body, version=1, verbose=TRUE, walk=TRUE)
 players_df = do.call("rbind", lapply(players, function(x) x$players))
 ```
 
@@ -40,7 +39,7 @@ league = "nba"
 sport = "basketball"
 ep = "stats"
 q_body=list(stat="triple_double", type="basketball_doubles_stat")
-tripdubs = stattle(TOKEN, sport=sport, league=league, ep=ep, query=q_body, version=1, walk=T)
+tripdubs = stattle(sport=sport, league=league, ep=ep, query=q_body, version=1, walk=TRUE)
 ```
 
 ## Next Steps
