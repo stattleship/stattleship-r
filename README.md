@@ -39,7 +39,7 @@ league = "nba"
 sport = "basketball"
 ep = "stats"
 q_body=list(stat="triple_double", type="basketball_doubles_stat")
-tripdubs = stattle(sport=sport, league=league, ep=ep, query=q_body, version=1, walk=TRUE)
+tripdubs = stattle(sport=sport, league=league, ep=ep, query=q_body, version=1, walk=FALSE)
 ```
 
 ## Next Steps
