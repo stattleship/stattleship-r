@@ -16,7 +16,6 @@ setToken('insert-your-token-here')
 Get all NBA players:
 
 ```
-library(stattleshipR)
 league = "nba"
 sport = "basketball"
 ep = "players"
