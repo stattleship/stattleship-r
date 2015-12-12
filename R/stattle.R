@@ -46,12 +46,13 @@ stattle = function(token,
   
   print("Making initial API request")
   ## get the first request
-  tmp = .queryAPI(.StattleEnv$data$token, sport, league, ep, query, verbose=T)
+  tmp = .queryAPI(.StattleEnv$data$token, sport, league, ep, query, debug=T)
   
   ## simple alert
-  if (tmp$response$status_code != 200) {
-    message("API response was something other than 200")
-  }
+  ## TODO: put the alerts on .queryAPI
+#   if (tmp$response$status_code != 200) {
+#     message("API response was something other than 200")
+#   }
   
   ## create the response list
   response = list()
@@ -71,12 +72,12 @@ stattle = function(token,
     if (pages >= 2) {
       for (p in 2:pages) {
         print(paste0("Retrieving results from page ", p, " of ", pages))
-        tmp_p = .queryAPI(.StattleEnv$data$token, sport, league, ep, query=query, page=p, verbose=T)
+        tmp_p = .queryAPI(.StattleEnv$data$token, sport, league, ep, query=query, page=p, debug=F)
         
         ## check to make sure 200
-        if (tmp$response$status_code != 200) {
-          message("the pages>2 loop requested a page that was not 200")
-        }
+#         if (tmp$response$status_code != 200) {
+#           message("the pages>2 loop requested a page that was not 200")
+#         }
         
         ## add as an element into the response container
         response[[p]] = tmp_p$api_json
@@ -96,12 +97,12 @@ stattle = function(token,
 .queryAPI = function(token, 
                     sport="hockey", 
                     league = "nhl", 
-                    ep="stats", 
+                    ep="teams", 
                     query=list(), 
                     version=1, 
                     walk=F,
                     page=NA,
-                    verbose=F) {
+                    debug=F) {
   
   ## packages :  doesnt feel like this is the right way to do it
   library(httr)
@@ -117,22 +118,28 @@ stattle = function(token,
     query = c(query, page=page)
   }
   
+  ## info for the User-Agent header
+  platform = sessionInfo()$platform
+  package_v = packageVersion("stattleshipR")
+  UA = sprintf("Stattleship R/%s (%s)", package_v, platform)
+  
   ## get the request from the API
   resp = GET(URL,
              add_headers(Authorization =.StattleEnv$data$token, 
                          Accept = ACCEPT, 
-                         `Content-Type`="application/json"), 
+                         `Content-Type`="application/json",
+                         `User-Agent`=UA), 
              query=query)
   
   ## convert response to text first, do not use baseline httr::content default
   api_response = content(resp, as="text")
   
   ## use jsonlite::fromJSON
-  api_response = jsonlite::fromJSON(api_response)
+  api_response = jsonlite::fromJSON(api_response, flatten=T)
   
   ## if verbose = T, return a list that includes the parsed results
   ## and the original request
-  if (verbose) {
+  if (debug) {
     api_response = list(response =  resp,
                         api_json = api_response)
   }
