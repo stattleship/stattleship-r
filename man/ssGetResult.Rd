@@ -6,7 +6,7 @@
 \usage{
 ssGetResult(token, sport = "hockey", league = "nhl", ep = "teams",
   query = list(), version = 1, walk = FALSE, page = NA,
-  verbose = FALSE)
+  verbose = TRUE)
 }
 \arguments{
 \item{sport}{character. The sport, such as hockey, basketball, football. Default is hockey.}
@@ -23,7 +23,10 @@ ssGetResult(token, sport = "hockey", league = "nhl", ep = "teams",
 
 \item{page}{numeric. The page number to request.  Default is NA.}
 
-\item{verbose}{logical. For debugging, prints status messages to the console, which can be helpful for walking through results.}
+\item{verbose}{logical. For debugging, prints status messages to the console, which can be helpful for walking through results. Default is TRUE.}
+}
+\value{
+a list of lists.  If `walk=FALSE`, it will be a list of length 1.  If `walk=TRUE`, a list of lists may be returned depending on how many pages are returned.
 }
 \description{
 A simple, generic function to query data from the Stattleship API
@@ -38,7 +41,7 @@ results <- ssGetResult(sport="hockey",
                        version = 1,
                        walk = FALSE,
                        page = NA,
-                       verbose = FALSE)
+                       verbose = TRUE)
 }
 }
 

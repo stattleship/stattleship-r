@@ -9,7 +9,9 @@
 #' @param version numeric. The API version. Current version is 1 and is the default value.
 #' @param walk logical. If TRUE, walks through and returns all results if there is more than one page of results.  Default is FALSE.
 #' @param page numeric. The page number to request.  Default is NA.
-#' @param verbose logical. For debugging, prints status messages to the console, which can be helpful for walking through results.
+#' @param verbose logical. For debugging, prints status messages to the console, which can be helpful for walking through results. Default is TRUE.
+#' 
+#' @return a list of lists.  If `walk=FALSE`, it will be a list of length 1.  If `walk=TRUE`, a list of lists may be returned depending on how many pages are returned.
 #' 
 #' @examples 
 #' \dontrun{
@@ -21,7 +23,7 @@
 #'                        version = 1,
 #'                        walk = FALSE,
 #'                        page = NA,
-#'                        verbose = FALSE)
+#'                        verbose = TRUE)
 #' }
 #' @export
 #' ssGetResult
@@ -34,7 +36,7 @@ ssGetResult <- function(token,
                         version = 1, 
                         walk = FALSE,
                         page = NA,
-                        verbose = FALSE) {
+                        verbose = TRUE) {
   
   ## if na, set page to 1 for consistency
   if (is.na(page)) page <- 1
@@ -44,7 +46,11 @@ ssGetResult <- function(token,
     query <- c(query, page=page)
   }
   
-  print("Making initial API request")
+  ## if verbose = TRUE, print status messages
+  if (verbose) {
+    print("Making initial API request")    
+  }
+
   ## get the first request
   tmp <- .queryAPI(.StattleEnv$data$token, sport, league, ep, query, debug=TRUE)
   
@@ -65,11 +71,21 @@ ssGetResult <- function(token,
     ## the first page was already retrievedd, only care 2+
     if (pages >= 2) {
       for (p in 2:pages) {
-        print(paste0("Retrieving results from page ", p, " of ", pages))
+        
+        ## if verbose, print the status message
+        if (verbose) {
+          print(paste0("Retrieving results from page ", p, " of ", pages))
+        }
+        
+        ## get the data
         tmp_p <- .queryAPI(.StattleEnv$data$token, sport, league, ep, query=query, page=p, debug=FALSE)
         
         ## add as an element into the response container
         response[[p]] <- tmp_p$api_json
+        
+        ## sleep the response: 
+        ## limited to 300calls/5 minutes, so stay safe at 1.1
+        Sys.sleep(1.1)
       }
       
     }#endif(pages)
