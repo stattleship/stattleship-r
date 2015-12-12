@@ -2,39 +2,39 @@
 #' 
 #' A simple, generic function to query data from the Stattleship API
 #' 
-#' @param sport character. The sport, such as hockey, basketball, football
-#' @param league character. NHL, NBA, NFL, etc.
-#' @param ep character. The endpoint
-#' @param query A list that defines the query parameters
-#' @param version The API version. Current version is 1.
-#' @param walk logical. if TRUE, walks through and returns all results if there is more than one page of results
-#' @param page numeric. The page number to request
-#' @param verbose logical. For debugging, returns response and parsed response.
+#' @param sport character. The sport, such as hockey, basketball, football. Default is hockey.
+#' @param league character. NHL, NBA, NFL, etc. Default is nhl.
+#' @param ep character. The endpoint.  Default is teams.
+#' @param query list. A list that defines the query parameters. Default is empty list.
+#' @param version numeric. The API version. Current version is 1 and is the default value.
+#' @param walk logical. If TRUE, walks through and returns all results if there is more than one page of results.  Default is FALSE.
+#' @param page numeric. The page number to request.  Default is NA.
+#' @param verbose logical. For debugging, prints status messages to the console, which can be helpful for walking through results.
 #' 
 #' @examples 
 #' \dontrun{
 #' setToken("insert-your-token-here")
-#' results <- stattle(sport="hockey", 
-#'                    league="nhl",
-#'                    ep = "stats",
-#'                    query = list()
-#'                    version = 1,
-#'                    walk = TRUE,
-#'                    page = NA,
-#'                    verbose = FALSE)
+#' results <- ssGetResult(sport="hockey", 
+#'                        league="nhl",
+#'                        ep = "teams",
+#'                        query = list()
+#'                        version = 1,
+#'                        walk = FALSE,
+#'                        page = NA,
+#'                        verbose = FALSE)
 #' }
 #' @export
-#' stattle
+#' ssGetResult
 
-stattle <- function(token, 
-                   sport = "hockey", 
-                   league = "nhl", 
-                   ep = "stats", 
-                   query = list(), 
-                   version = 1, 
-                   walk = F,
-                   page = NA,
-                   verbose = F) {
+ssGetResult <- function(token,
+                        sport = "hockey", 
+                        league = "nhl", 
+                        ep = "teams", 
+                        query = list(), 
+                        version = 1, 
+                        walk = FALSE,
+                        page = NA,
+                        verbose = FALSE) {
   
   ## if na, set page to 1 for consistency
   if (is.na(page)) page <- 1
@@ -46,7 +46,7 @@ stattle <- function(token,
   
   print("Making initial API request")
   ## get the first request
-  tmp <- .queryAPI(.StattleEnv$data$token, sport, league, ep, query, debug=T)
+  tmp <- .queryAPI(.StattleEnv$data$token, sport, league, ep, query, debug=TRUE)
   
   ## create the response list
   response <- list()
@@ -66,7 +66,7 @@ stattle <- function(token,
     if (pages >= 2) {
       for (p in 2:pages) {
         print(paste0("Retrieving results from page ", p, " of ", pages))
-        tmp_p <- .queryAPI(.StattleEnv$data$token, sport, league, ep, query=query, page=p, debug=F)
+        tmp_p <- .queryAPI(.StattleEnv$data$token, sport, league, ep, query=query, page=p, debug=FALSE)
         
         ## add as an element into the response container
         response[[p]] <- tmp_p$api_json
@@ -89,9 +89,9 @@ stattle <- function(token,
                     ep = "teams", 
                     query = list(), 
                     version= 1, 
-                    walk = F,
+                    walk = FALSE,
                     page = NA,
-                    debug = F) {
+                    debug = FALSE) {
   
   ## packages :  doesnt feel like this is the right way to do it
   library(httr)
@@ -124,7 +124,7 @@ stattle <- function(token,
   api_response <- content(resp, as="text")
   
   ## use jsonlite::fromJSON
-  api_response <- jsonlite::fromJSON(api_response, flatten=T)
+  api_response <- jsonlite::fromJSON(api_response, flatten=TRUE)
   
   ## if verbose = T, return a list that includes the parsed results
   ## and the original request
