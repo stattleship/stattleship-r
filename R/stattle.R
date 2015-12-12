@@ -26,61 +26,50 @@
 #' @export
 #' stattle
 
-stattle = function(token, 
-                   sport="hockey", 
+stattle <- function(token, 
+                   sport = "hockey", 
                    league = "nhl", 
-                   ep="stats", 
-                   query=list(), 
-                   version=1, 
-                   walk=F,
-                   page=NA,
-                   verbose=F) {
+                   ep = "stats", 
+                   query = list(), 
+                   version = 1, 
+                   walk = F,
+                   page = NA,
+                   verbose = F) {
   
   ## if na, set page to 1 for consistency
-  if (is.na(page)) page = 1
+  if (is.na(page)) page <- 1
   
   ## if page is supplied, add it to the list
   if (!is.na(page) & is.numeric(page) & page >= 1) {
-    query = c(query, page=page)
+    query <- c(query, page=page)
   }
   
   print("Making initial API request")
   ## get the first request
-  tmp = .queryAPI(.StattleEnv$data$token, sport, league, ep, query, debug=T)
-  
-  ## simple alert
-  ## TODO: put the alerts on .queryAPI
-#   if (tmp$response$status_code != 200) {
-#     message("API response was something other than 200")
-#   }
+  tmp <- .queryAPI(.StattleEnv$data$token, sport, league, ep, query, debug=T)
   
   ## create the response list
-  response = list()
+  response <- list()
   
   ## set the original parsed response to the first element
-  response[[1]] = tmp$api_json
+  response[[1]] <- tmp$api_json
   
   ## if walk, parse here and send into respose[[i]]
   ## NOT FINISHED -- below is under dev
   if (walk) {
     ## check to see if paging is necessary
-    total_results = as.numeric(tmp$response$headers$total)
-    rpp = as.numeric(tmp$response$headers$`per-page`)
-    pages = ceiling(total_results / rpp)
+    total_results <- as.numeric(tmp$response$headers$total)
+    rpp <- as.numeric(tmp$response$headers$`per-page`)
+    pages <- ceiling(total_results / rpp)
     
     ## the first page was already retrievedd, only care 2+
     if (pages >= 2) {
       for (p in 2:pages) {
         print(paste0("Retrieving results from page ", p, " of ", pages))
-        tmp_p = .queryAPI(.StattleEnv$data$token, sport, league, ep, query=query, page=p, debug=F)
-        
-        ## check to make sure 200
-#         if (tmp$response$status_code != 200) {
-#           message("the pages>2 loop requested a page that was not 200")
-#         }
+        tmp_p <- .queryAPI(.StattleEnv$data$token, sport, league, ep, query=query, page=p, debug=F)
         
         ## add as an element into the response container
-        response[[p]] = tmp_p$api_json
+        response[[p]] <- tmp_p$api_json
       }
       
     }#endif(pages)
@@ -94,53 +83,53 @@ stattle = function(token,
 }
 
 
-.queryAPI = function(token, 
-                    sport="hockey", 
+.queryAPI <- function(token, 
+                    sport = "hockey", 
                     league = "nhl", 
-                    ep="teams", 
-                    query=list(), 
-                    version=1, 
-                    walk=F,
-                    page=NA,
-                    debug=F) {
+                    ep = "teams", 
+                    query = list(), 
+                    version= 1, 
+                    walk = F,
+                    page = NA,
+                    debug = F) {
   
   ## packages :  doesnt feel like this is the right way to do it
   library(httr)
   
   ## build the URL and the endpoint
-  URL = sprintf("https://www.stattleship.com/%s/%s/%s", sport, league, ep)
+  URL <- sprintf("https://www.stattleship.com/%s/%s/%s", sport, league, ep)
   
   ## the accept parameters.  Is there a better way to do this?
-  ACCEPT = sprintf("application/vnd.stattleship.com; version=%d", version)
+  ACCEPT <- sprintf("application/vnd.stattleship.com; version=%d", version)
   
   ## if page is supplied, add it to the list
   if (!is.na(page) & is.numeric(page) & page >= 1) {
-    query = c(query, page=page)
+    query <- c(query, page=page)
   }
   
   ## info for the User-Agent header
-  platform = sessionInfo()$platform
-  package_v = packageVersion("stattleshipR")
-  UA = sprintf("Stattleship R/%s (%s)", package_v, platform)
+  platform <- sessionInfo()$platform
+  package_v <- packageVersion("stattleshipR")
+  UA <- sprintf("Stattleship R/%s (%s)", package_v, platform)
   
   ## get the request from the API
-  resp = GET(URL,
+  resp <- GET(URL,
              add_headers(Authorization =.StattleEnv$data$token, 
                          Accept = ACCEPT, 
-                         `Content-Type`="application/json",
-                         `User-Agent`=UA), 
-             query=query)
+                         `Content-Type` = "application/json",
+                         `User-Agent` = UA), 
+             query = query)
   
   ## convert response to text first, do not use baseline httr::content default
-  api_response = content(resp, as="text")
+  api_response <- content(resp, as="text")
   
   ## use jsonlite::fromJSON
-  api_response = jsonlite::fromJSON(api_response, flatten=T)
+  api_response <- jsonlite::fromJSON(api_response, flatten=T)
   
   ## if verbose = T, return a list that includes the parsed results
   ## and the original request
   if (debug) {
-    api_response = list(response =  resp,
+    api_response <- list(response =  resp,
                         api_json = api_response)
   }
   
