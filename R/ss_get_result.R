@@ -91,6 +91,7 @@ ss_get_result <- function(token,
     }#endif(pages)
     
   }#endif(walk)
+  stopifnot(length(response)==pages)
   
   ## return the list of data results
   ## list of lists
