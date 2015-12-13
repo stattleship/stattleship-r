@@ -36,7 +36,7 @@ ssGetResult <- function(token,
                         version = 1, 
                         walk = FALSE,
                         page = NA,
-                        verbose = TRUE, ...) {
+                        verbose = TRUE) {
   
   ## if na, set page to 1 for consistency
   if (is.na(page)) page <- 1
@@ -123,6 +123,15 @@ ssGetResult <- function(token,
             length(sport) == 1,
             length(league) == 1,
             length(ep) == 1)
+  
+  ## ensure that are lower case
+  sport = tolower(sport)
+  league = tolower(league)
+  ep = tolower(ep)
+  
+  ## enforce some basics
+  stopifnot(sport %in% c("hockey", "basketball", "football"),
+            league %in% c("nhl", "nba", "nfl"))
   
   ## build the URL and the endpoint
   URL <- sprintf("https://www.stattleship.com/%s/%s/%s", sport, league, ep)
