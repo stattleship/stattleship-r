@@ -36,7 +36,7 @@ ssGetResult <- function(token,
                         version = 1, 
                         walk = FALSE,
                         page = NA,
-                        verbose = TRUE) {
+                        verbose = TRUE, ...) {
   
   ## if na, set page to 1 for consistency
   if (is.na(page)) page <- 1
@@ -111,6 +111,18 @@ ssGetResult <- function(token,
   
   ## packages :  doesnt feel like this is the right way to do it
   library(httr)
+  
+  ## testing???
+  stopifnot(is.character(token), 
+            is.character(sport),
+            is.character(ep),
+            is.list(query),
+            is.logical(walk),
+            is.logical(page) | is.numeric(page),
+            is.logical(debug),
+            length(sport) == 1,
+            length(league) == 1,
+            length(ep) == 1)
   
   ## build the URL and the endpoint
   URL <- sprintf("https://www.stattleship.com/%s/%s/%s", sport, league, ep)
