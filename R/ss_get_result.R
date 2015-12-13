@@ -78,7 +78,7 @@ ss_get_result <- function(token,
         }
         
         ## get the data
-        tmp_p <- .queryAPI(.StattleEnv$data$token, sport, league, ep, query=query, page=p, debug=FALSE)
+        tmp_p <- .queryAPI(.StattleEnv$data$token, sport, league, ep, query=query, page=p, debug=TRUE)
         
         ## add as an element into the response container
         response[[p]] <- tmp_p$api_json

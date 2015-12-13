@@ -26,8 +26,11 @@ hockey_games <- function(league="nhl", team_id="nhl-bos", verbose=TRUE) {
             is.character(team_id),
             length(team_id)==1)
   
-  ## put the team into a list
-  q_body = list(team_id=team_id)
+  ## put the team into a list if there was one specified
+  q_body = list()
+  if (nchar(team_id) > 0) {
+    q_body = list(team_id=team_id)
+  }
   
   ## retrieve the teams
   tmp_call <- ss_get_result(sport = "hockey", 

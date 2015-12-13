@@ -26,8 +26,13 @@ hockey_players <- function(league="nhl", team_id="nhl-bos", verbose=TRUE) {
             is.character(team_id),
             length(team_id)==1)
   
-  ## put the team into a list
-  q_body = list(team_id=team_id)
+  ## put the team into a list if there was one specified
+  ## team_id = "" is for all teams
+  q_body = list()
+  if (nchar(team_id) > 0) {
+    q_body = list(team_id=team_id)
+  }
+
   
   ## retrieve the players for a team in a league
   tmp_call <- ss_get_result(sport = "hockey", 
