@@ -7,7 +7,7 @@
 hockey_teams(league = "nhl", verbose = TRUE)
 }
 \arguments{
-\item{league}{character. The hockey league to retrieve.  Currently only the NHL is supported, as is the default.}
+\item{league}{character. The hockey league to retrieve.  Currently only the NHL is supported, and is the default.}
 
 \item{verbose}{logical.  TRUE will print messages to the console.  Default is TRUE.}
 }

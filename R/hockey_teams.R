@@ -2,7 +2,7 @@
 #' 
 #' A function to retrieve all of the available hockey teams for a specified league.
 #' 
-#' @param league character. The hockey league to retrieve.  Currently only the NHL is supported, as is the default.
+#' @param league character. The hockey league to retrieve.  Currently only the NHL is supported, and is the default.
 #' @param verbose logical.  TRUE will print messages to the console.  Default is TRUE.
 #' 
 #' @return a dataframe of the hockey teams for the specified league.
@@ -25,6 +25,7 @@ hockey_teams <- function(league="nhl", verbose=TRUE) {
   ## retrieve the teams
   tmp_call <- ss_get_result(sport = "hockey", 
                             league = league, 
+                            ep = "teams",
                             walk = T, 
                             verbose = verbose)
   
