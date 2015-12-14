@@ -10,7 +10,7 @@
 #' 
 #' @examples 
 #' \dontrun{
-#' setToken("insert-your-token-here")
+#' set_token("insert-your-token-here")
 #' results <- hockey_players(league="nhl", team_id="nhl-bos")
 #' }
 #' @export
@@ -28,9 +28,9 @@ hockey_players <- function(league="nhl", team_id="nhl-bos", verbose=TRUE) {
   
   ## put the team into a list if there was one specified
   ## team_id = "" is for all teams
-  q_body = list()
+  q_body <- list()
   if (nchar(team_id) > 0) {
-    q_body = list(team_id=team_id)
+    q_body <- list(team_id=team_id)
   }
 
   

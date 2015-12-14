@@ -10,7 +10,7 @@
 #' 
 #' @examples 
 #' \dontrun{
-#' setToken("insert-your-token-here")
+#' set_token("insert-your-token-here")
 #' results_bos <- hockey_injuries(league="nhl", team_id="nhl-bos") ## bruins injuries
 #' results_all <- hockey_injuries(league="nhl") ## all injuries
 #' }
@@ -28,9 +28,9 @@ hockey_injuries <- function(league="nhl", team_id="", verbose=TRUE) {
             length(team_id)==1)
   
   ## put the team into a list if there was one specified
-  q_body = list()
+  q_body <- list()
   if (nchar(team_id) > 0) {
-    q_body = list(team_id=team_id)
+    q_body <- list(team_id=team_id)
   }
   
   ## retrieve the players for a team in a league
