@@ -15,28 +15,28 @@
 #' 
 #' @examples 
 #' \dontrun{
-#' setToken("insert-your-token-here")
-#' results <- ssGetResult(sport="hockey", 
-#'                        league="nhl",
-#'                        ep = "teams",
-#'                        query = list()
-#'                        version = 1,
-#'                        walk = FALSE,
-#'                        page = NA,
-#'                        verbose = TRUE)
+#' set_token("insert-your-token-here")
+#' results <- ss_get_result(sport="hockey", 
+#'                          league="nhl",
+#'                          ep = "teams",
+#'                          query = list()
+#'                          version = 1,
+#'                          walk = FALSE,
+#'                          page = NA,
+#'                          verbose = TRUE)
 #' }
 #' @export
-#' ssGetResult
+#' ss_get_result
 
-ssGetResult <- function(token,
-                        sport = "hockey", 
-                        league = "nhl", 
-                        ep = "teams", 
-                        query = list(), 
-                        version = 1, 
-                        walk = FALSE,
-                        page = NA,
-                        verbose = TRUE) {
+ss_get_result <- function(token,
+                          sport = "hockey", 
+                          league = "nhl", 
+                          ep = "teams", 
+                          query = list(), 
+                          version = 1, 
+                          walk = FALSE,
+                          page = NA,
+                          verbose = TRUE) {
   
   ## if na, set page to 1 for consistency
   if (is.na(page)) page <- 1
@@ -78,7 +78,7 @@ ssGetResult <- function(token,
         }
         
         ## get the data
-        tmp_p <- .queryAPI(.StattleEnv$data$token, sport, league, ep, query=query, page=p, debug=FALSE)
+        tmp_p <- .queryAPI(.StattleEnv$data$token, sport, league, ep, query=query, page=p, debug=TRUE)
         
         ## add as an element into the response container
         response[[p]] <- tmp_p$api_json
@@ -91,6 +91,7 @@ ssGetResult <- function(token,
     }#endif(pages)
     
   }#endif(walk)
+  stopifnot(length(response)==pages)
   
   ## return the list of data results
   ## list of lists

@@ -18,7 +18,7 @@ Obtain an access TOKEN from [stattleship.com](www.stattleship.com). Load R and i
 
 ```
 library(stattleshipR)
-setToken('insert-your-token-here')
+set_token('insert-your-token-here')
 ```
 
 Get all NBA players:
@@ -28,7 +28,7 @@ league = "nba"
 sport = "basketball"
 ep = "players"
 q_body = list()
-players = ssGetResult(sport=sport, league=league, ep=ep, query=q_body, version=1, walk=TRUE)
+players = ss_get_result(sport=sport, league=league, ep=ep, query=q_body, version=1, walk=TRUE)
 players_df = do.call("rbind", lapply(players, function(x) x$players))
 ```
 
@@ -39,7 +39,7 @@ league = "nba"
 sport = "basketball"
 ep = "stats"
 q_body=list(stat="triple_double", type="basketball_doubles_stat")
-tripdubs = ssGetResult(sport=sport, league=league, ep=ep, query=q_body, version=1, walk=FALSE)
+tripdubs = ss_get_result(sport=sport, league=league, ep=ep, query=q_body, version=1, walk=FALSE)
 ```
 
 ## Next Steps

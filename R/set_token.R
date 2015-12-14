@@ -5,11 +5,11 @@
 #' @param token character. A valid Stattleship API token
 #' @examples
 #' \dontrun{
-#' setToken("insert-your-token-here")}
+#' set_token("insert-your-token-here")}
 #' @export
-#' setToken
+#' set_token
 
-setToken <- function(token){
+set_token <- function(token){
     if(!is.null(token)){
         .StattleEnv$data$token <- token
     }
