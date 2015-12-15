@@ -8,6 +8,7 @@ league <- "nfl"
 ep <- "teams"
 query <- list()
 test_that("number of rows returned matches total results in response header", {
+
   tmp <- stattleshipR:::.queryAPI(stattleshipR:::.StattleEnv$data$token, sport, league, ep, query, debug=TRUE, walk=TRUE)
   expect_equal(as.numeric(tmp$response$headers$total), nrow(tmp$api_json$teams))
 
