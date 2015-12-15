@@ -13,11 +13,11 @@ test_that("number of rows returned matches total results in response header", {
   expect_equal(as.numeric(tmp$response$headers$total), nrow(tmp$api_json$teams))
 
   ## need a test like this but with fewer pages, just need a few pages returned, this takes too long to run
-  ep <- "injuries"
+  ep <- "games"
   q_body <- list()
   tmp <- stattleshipR:::.queryAPI(stattleshipR:::.StattleEnv$data$token, sport=sport, league=league, ep=ep, query=q_body, version=1, debug=TRUE, walk=TRUE)
   json_result <- ss_get_result(sport=sport, league=league, ep=ep, query=q_body, version=1, verbose=TRUE, walk=TRUE)
-  result <- rbindlist(lapply(json_result, function(x) x$injuries))
+  result <- rbindlist(lapply(json_result, function(x) x$games))
   expect_equal(as.numeric(tmp$response$headers$total), nrow(result))  
 
   ep <- "stats"
