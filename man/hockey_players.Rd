@@ -21,7 +21,7 @@ A function to retrieve all of the players for a given team, in a given league
 }
 \examples{
 \dontrun{
-setToken("insert-your-token-here")
+set_token("insert-your-token-here")
 results <- hockey_players(league="nhl", team_id="nhl-bos")
 }
 }

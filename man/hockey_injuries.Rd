@@ -21,7 +21,7 @@ A function to retrieve all of the injuries in hockey, for a given team.
 }
 \examples{
 \dontrun{
-setToken("insert-your-token-here")
+set_token("insert-your-token-here")
 results_bos <- hockey_injuries(league="nhl", team_id="nhl-bos") ## bruins injuries
 results_all <- hockey_injuries(league="nhl") ## all injuries
 }
