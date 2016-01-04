@@ -40,7 +40,8 @@ ss_get_result <- function(token,
   
   ## if na, set page to 1 for consistency
   if (is.na(page)) page <- 1
-  
+  if (is.null(page)) page <- 1
+
   ## if page is supplied, add it to the list
   if (!is.na(page) & is.numeric(page) & page >= 1) {
     query <- c(query, page=page)
@@ -63,13 +64,14 @@ ss_get_result <- function(token,
   ## if walk, parse here and send into respose[[i]]
   ## NOT FINISHED -- below is under dev
   if (walk) {
+    
     ## check to see if paging is necessary
     total_results <- as.numeric(tmp$response$headers$total)
     rpp <- as.numeric(tmp$response$headers$`per-page`)
     pages <- ceiling(total_results / rpp)
     
-    ## the first page was already retrievedd, only care 2+
-    if (pages >= 2) {
+    ## the first page was already retrieved, only care 2+
+    if ('link' %in% attributes(tmp$response$headers)$name) {
       for (p in 2:pages) {
         
         ## if verbose, print the status message
