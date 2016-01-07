@@ -96,9 +96,8 @@ ss_get_result <- function(token,
   #endif(walk)
   pages <- 1
   }
-    stopifnot(length(response)==pages)
-  }#endif(walk)
   
+  stopifnot(length(response)==pages)
   ## return the list of data results
   ## list of lists
   return(response)
@@ -180,3 +179,4 @@ ss_get_result <- function(token,
   ## return the data
   return(api_response)
 }
+
