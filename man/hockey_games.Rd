@@ -21,7 +21,7 @@ A function to retrieve all of the available hockey games for a specified team.
 }
 \examples{
 \dontrun{
-setToken("insert-your-token-here")
+set_token("insert-your-token-here")
 results <- hockey_games(league="nhl", team_id="nhl-bos")
 }
 }

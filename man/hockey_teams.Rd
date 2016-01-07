@@ -19,7 +19,7 @@ A function to retrieve all of the available hockey teams for a specified league.
 }
 \examples{
 \dontrun{
-setToken("insert-your-token-here")
+set_token("insert-your-token-here")
 results <- hockey_teams(league="nhl")
 }
 }
