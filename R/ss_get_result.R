@@ -87,7 +87,7 @@ ss_get_result <- function(token,
         
         ## sleep the response: 
         ## limited to 300calls/5 minutes, so stay safe at 1.1
-        Sys.sleep(1.1)
+        Sys.sleep(.8)
       }
       
     }#endif(pages)
