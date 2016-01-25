@@ -70,6 +70,11 @@ ss_get_result <- function(token,
     rpp <- as.numeric(tmp$response$headers$`per-page`)
     pages <- ceiling(total_results / rpp)
     
+    ## make sure that pages = 1 
+    if(total_results == 0){
+      pages <- 1
+    }
+    
     ## the first page was already retrieved, only care 2+
     if ('link' %in% attributes(tmp$response$headers)$name) {
       for (p in 2:pages) {
@@ -98,9 +103,7 @@ ss_get_result <- function(token,
       
   }
   
-  if(total_results == 0){
-      pages <- 1
-  }
+
   stopifnot(length(response)==pages)
   ## return the list of data results
   ## list of lists
