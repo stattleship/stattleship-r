@@ -95,8 +95,12 @@ ss_get_result <- function(token,
   } else {
   #endif(walk)
   pages <- 1
+      
   }
   
+  if(total_results == 0){
+      pages <- 1
+  }
   stopifnot(length(response)==pages)
   ## return the list of data results
   ## list of lists
