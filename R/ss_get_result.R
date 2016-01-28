@@ -66,12 +66,17 @@ ss_get_result <- function(token,
   if (walk) {
     
     ## check to see if paging is necessary
-    total_results <- as.numeric(tmp$response$headers$total)
-    rpp <- as.numeric(tmp$response$headers$`per-page`)
-    pages <- ceiling(total_results / rpp)
+    if('total' %in% attributes(tmp$response$headers)$name){
+        total_results <- as.numeric(tmp$response$headers$total)
+        rpp <- as.numeric(tmp$response$headers$`per-page`)
+        pages <- ceiling(total_results / rpp)
+    } else{
+        pages <- 1
+        total_results <- 1
+    }
     
     ## make sure that pages = 1 
-    if(total_results == 0){
+    if(total_results == 0 | total_results == 1){
       pages <- 1
     }
     
