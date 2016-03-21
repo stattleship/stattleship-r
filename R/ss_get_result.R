@@ -2,8 +2,8 @@
 #' 
 #' A simple, generic function to query data from the Stattleship API
 #' 
-#' @param sport character. The sport, such as hockey, basketball, football. Default is hockey.
-#' @param league character. NHL, NBA, NFL, etc. Default is nhl.
+#' @param sport character. The sport, such as hockey, basketball, football, and baseball. Default is hockey.
+#' @param league character. NHL, NBA, NFL, and MLB. Default is nhl.
 #' @param ep character. The endpoint.  Default is teams.
 #' @param query list. A list that defines the query parameters. Default is empty list.
 #' @param version numeric. The API version. Current version is 1 and is the default value.
@@ -148,8 +148,8 @@ ss_get_result <- function(token,
   ep = tolower(ep)
   
   ## enforce some basics
-  stopifnot(sport %in% c("hockey", "basketball", "football"),
-            league %in% c("nhl", "nba", "nfl"))
+  stopifnot(sport %in% c("hockey", "basketball", "football", "baseball"),
+            league %in% c("nhl", "nba", "nfl", "mlb"))
   
   ## build the URL and the endpoint
   URL <- sprintf("https://www.stattleship.com/%s/%s/%s", sport, league, ep)

@@ -9,9 +9,9 @@ ss_get_result(token, sport = "hockey", league = "nhl", ep = "teams",
   verbose = TRUE)
 }
 \arguments{
-\item{sport}{character. The sport, such as hockey, basketball, football. Default is hockey.}
+\item{sport}{character. The sport, such as hockey, basketball, football, and baseball. Default is hockey.}
 
-\item{league}{character. NHL, NBA, NFL, etc. Default is nhl.}
+\item{league}{character. NHL, NBA, NFL, and MLB. Default is nhl.}
 
 \item{ep}{character. The endpoint.  Default is teams.}
 
