@@ -1,6 +1,6 @@
 Package: stattleshipR
 Title: R Interface to Query the Stattleship API
-Version: 0.0.3
+Version: 0.0.4
 Author: Brock Tibert, Tanya Cashorali
 Maintainer: Tanya Cashorali <tanyacash@gmail.com>
 Description: Provides an easy to use R wrapper around the Stattleship API that
