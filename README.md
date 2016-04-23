@@ -6,7 +6,7 @@ Check out the [Stattleship API](https://www.stattleship.com) - The Sports Data A
 
 Affordable. Meaningful. Developer-Friendly.
 
-:football: :basketball: and :black_circle: with :baseball: coming soon. 
+:football: :basketball: :black_circle: and :baseball: 
 
 We're gonna need a bigger :boat:!
 
