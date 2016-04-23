@@ -13,6 +13,10 @@ We're gonna need a bigger :boat:!
 ## Install
 `devtools::install_github("stattleship/stattleship-r")`
 
+## Quick Start
+
+To get started quickly, check out [this post](http://blog.stattleship.com/stop-scraping-for-sports-data-start-stattleshipping/) which covers everything that you need.
+
 ## Getting Started
 Obtain an access TOKEN from [stattleship.com](www.stattleship.com). Load R and initialize your TOKEN for your session and load the library:
 
