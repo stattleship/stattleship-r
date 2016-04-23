@@ -1,4 +1,4 @@
-#' Utility function to quickly rbind all dataframes of an entry within the list
+#' Utility function to quickly rbind all dataframes of an entry within the list returned by ss_get_result
 #' 
 #' A helper to quickly bind dataframes
 #' 
