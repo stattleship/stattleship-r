@@ -18,18 +18,22 @@
 #'                          page = NA,
 #'                          verbose = TRUE)
 #' results_df <- parse_stattle(results, "feats")
-#' show_datasets(results_df)
+#' show_sideload(results_df)
 #' 
 #' }
 #' @export
-#' show_datasets
+#' show_sideload
 
-show_datasets <- function(stattle_list) {
+show_sideload <- function(stattle_list) {
+  ## check if already parsed
+  if (class(stattle_list)=="data.frame") {
+    stop("your data are already in a data.frame. No need to parse it any further!")
+  }
   ## ensure that the stattle_list is indeed a list
   stopifnot(class(stattle_list) == "list")
   ## ensure that the stattle_list is at least length 1
   stopifnot(length(stattle_list) >= 1)
-  ## ensure that the entry exists as a key in the list
+  ## parse out the elements
   x <- names(stattle_list[[1]])
   return(x)
 }

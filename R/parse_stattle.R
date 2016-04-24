@@ -24,6 +24,10 @@
 #' parse_stattle
 
 parse_stattle <- function(stattle_list, entry) {
+  ## check that is a length > 0
+  if (length(stattle_list) < 1) {
+    message("There is a good chance that no results were returned from your query.  Check valid criteria for ss_get_result call")
+  }
   ## ensure that the stattle_list is indeed a list
   stopifnot(class(stattle_list) == "list")
   ## ensure that the entry exists as a key in the list

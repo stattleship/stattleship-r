@@ -2,22 +2,28 @@
 % Please edit documentation in R/hockey_players.R
 \name{hockey_players}
 \alias{hockey_players}
-\title{Retrieve players for a given team}
+\title{Retrieve players for a given league, team and season during a specific time interval.}
 \usage{
-hockey_players(league = "nhl", team_id = "nhl-bos", verbose = TRUE)
+hockey_players(league = "nhl", team_id = "nhl-bos",
+  interval_type = "regularseason", season_id = "nhl-2015-2016",
+  verbose = TRUE)
 }
 \arguments{
-\item{league}{character. The hockey league to retrieve.  Currently only the NHL is supported, and is the default.}
+\item{league}{character. The hockey league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. NHL the default.}
 
 \item{team_id}{character.  The team id, can be in the form of the slug "nhl-bos".  Default is the Boston Bruins, nhl-bos.}
+
+\item{interval_type}{character.  The season interval.  Default is regularseason.}
+
+\item{season_id}{character.  The season.  Default is nhl-2015-2016.}
 
 \item{verbose}{logical.  TRUE will print messages to the console.  Default is TRUE.}
 }
 \value{
-a dataframe of the hockey teams for the specified league.
+a dataframe of the hockey players for the specified league and team.
 }
 \description{
-A function to retrieve all of the players for a given team, in a given league
+A function to retrieve all of the players in hockey, for a given team during a current season and interval type.
 }
 \examples{
 \dontrun{

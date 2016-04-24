@@ -2,7 +2,7 @@
 #' 
 #' A function to retrieve all of the available hockey teams for a specified league.
 #' 
-#' @param league character. The hockey league to retrieve.  Currently only the NHL is supported, and is the default.
+#' @param league character. The hockey league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. NHL is default.
 #' @param verbose logical.  TRUE will print messages to the console.  Default is TRUE.
 #' 
 #' @return a dataframe of the hockey teams for the specified league.
