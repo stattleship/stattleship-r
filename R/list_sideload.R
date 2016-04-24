@@ -18,13 +18,13 @@
 #'                          page = NA,
 #'                          verbose = TRUE)
 #' results_df <- parse_stattle(results, "feats")
-#' show_sideload(results_df)
+#' list_sideload(results_df)
 #' 
 #' }
 #' @export
-#' show_sideload
+#' list_sideload
 
-show_sideload <- function(stattle_list) {
+list_sideload <- function(stattle_list) {
   ## check if already parsed
   if (class(stattle_list)=="data.frame") {
     stop("your data are already in a data.frame. No need to parse it any further!")

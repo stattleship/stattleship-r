@@ -30,7 +30,21 @@ baseball_teams <- function(league="mlb", verbose=TRUE) {
                             verbose = verbose)
   
   ## return the data
-  teams <- do.call("rbind", lapply(tmp_call, function(x) x$teams))
+  teams <- parse_stattle(tmp_call, "teams")
+  divs <- parse_stattle(tmp_call, "divisions")
+  confs <- parse_stattle(tmp_call, "conferences")
+  lgs <- parse_stattle(tmp_call, "leagues")
+  
+  ## clean up data
+  lgs <-  clean_sideload_leagues(lgs)
+  divs <- clean_sideload_divisions(divs)
+  confs <- clean_sideload_conferences(confs)
+  teams <- clean_sideload_teams(teams)
+
+  ## merge divs and confs
+  confs <-  dplyr::inner_join(confs, lgs)
+  divs <- dplyr::inner_join(divs, confs)
+  teams <- dplyr::inner_join(teams, divs)
   
   ## ensure a dataframe
   stopifnot(is.data.frame(teams))

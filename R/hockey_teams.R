@@ -29,23 +29,22 @@ hockey_teams <- function(league="nhl", verbose=TRUE) {
                             walk = T, 
                             verbose = verbose)
   
-  ## come back to this later.  many similar names collide.  Let's talk about this.
-  ## get the dataframe -- walk just in case
-#   tmp_teams = do.call("rbind", lapply(tmp_call, function(x) x$teams))
-#   tmp_divisions = do.call("rbind", lapply(tmp_call, function(x) x$divisions))
-#   tmp_confs = do.call("rbind", lapply(tmp_call, function(x) x$conferences))
-#   tmp_leagues = do.call("rbind", lapply(tmp_call, function(x) x$leagues))
-  
-  ## give each "id" a different name
-#   names(tmp_teams)[which(names(tmp_teams)=="id")] = "team_id"
-#   names(tmp_divisions)[which(names(tmp_divisions)=="id")] = "division_id"
-#   names(tmp_confs)[which(names(tmp_confs)=="id")] = "conference_id"
-#   names(tmp_leagues)[which(names(tmp_leagues)=="id")] = "league_id"
-  
-  ## merge the data together
-  
   ## return the data
-  teams <- do.call("rbind", lapply(tmp_call, function(x) x$teams))
+  teams <- parse_stattle(tmp_call, "teams")
+  divs <- parse_stattle(tmp_call, "divisions")
+  confs <- parse_stattle(tmp_call, "conferences")
+  lgs <- parse_stattle(tmp_call, "leagues")
+  
+  ## clean up data
+  lgs <-  clean_sideload_leagues(lgs)
+  divs <- clean_sideload_divisions(divs)
+  confs <- clean_sideload_conferences(confs)
+  teams <- clean_sideload_teams(teams)
+
+  ## merge divs and confs
+  confs <-  dplyr::inner_join(confs, lgs)
+  divs <- dplyr::inner_join(divs, confs)
+  teams <- dplyr::inner_join(teams, divs)
   
   ## ensure a dataframe
   stopifnot(is.data.frame(teams))
