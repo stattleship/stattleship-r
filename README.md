@@ -6,11 +6,7 @@ Check out the [Stattleship API](https://www.stattleship.com) - The Sports Data A
 
 Affordable. Meaningful. Developer-Friendly.
 
-<<<<<<< HEAD
-:football: :basketball: :black_circle: and :baseball: 
-=======
 :football:, :basketball:, :black_circle: and :baseball: available now. College :football: and Major League :soccer: to come. 
->>>>>>> master
 
 We're gonna need a bigger :boat:!
 
