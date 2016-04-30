@@ -30,6 +30,9 @@ clean_sideload_teams <- function(x, prefix="team") {
   y$division_id <-  x$division_id
   y$league_id  <-  x$league_id
   
+  ## ensure unique
+  y = unique(y)
+  
   ## return the datafarme
   return(y)
   

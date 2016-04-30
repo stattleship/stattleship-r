@@ -49,6 +49,9 @@ baseball_teams <- function(league="mlb", verbose=TRUE) {
   ## ensure a dataframe
   stopifnot(is.data.frame(teams))
   
+  ## ensure unique
+  teams <- unique(teams)
+  
   ## return the datafarme
   return(teams)
   

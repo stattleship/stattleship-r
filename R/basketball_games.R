@@ -80,8 +80,8 @@ basketball_games <- function(league = "nba",
   ## home team win indicator and season from the call
   games$season_slug = season_id
   
-  ## ensure a dataframe
-  stopifnot(is.data.frame(games))
+  ## ensure unique
+  games <- unique(games)
   
   ## return the datafarme
   return(games)

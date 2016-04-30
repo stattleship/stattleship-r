@@ -52,10 +52,23 @@ baseball_players <- function(league = "mlb",
                             verbose = verbose)
   
   ## return the data
-  players <- do.call("rbind", lapply(tmp_call, function(x) x$players))
+  players <- parse_stattle(tmp_call, "players")
+  leagues <- parse_stattle(tmp_call, "leagues")
+  teams <- parse_stattle(tmp_call, "teams")
+  
+  ## clean the data
+  leagues <-  clean_sideload_leagues(leagues)
+  teams <- clean_sideload_teams(teams)
+  
+  ## merge on the data
+  players <- dplyr::left_join(players, teams)
+  players <- dplyr::left_join(players, leagues)
   
   ## ensure a dataframe
   stopifnot(is.data.frame(players))
+  
+  ## ensure unique
+  players <- unique(players)
   
   ## return the datafarme
   return(players)

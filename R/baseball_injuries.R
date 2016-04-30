@@ -51,13 +51,30 @@ baseball_injuries <- function(league = "mlb",
                             verbose = verbose)
   
   ## return the data
-  games <- do.call("rbind", lapply(tmp_call, function(x) x$injuries))
+  injuries <- parse_stattle(tmp_call, "injuries")
+  players <- parse_stattle(tmp_call, "players")
+  teams <- parse_stattle(tmp_call, "teams")
+  
+  ## cleanup sideloads
+  players <- clean_sideload_players(players)
+  teams <- clean_sideload_teams(teams)
+  
+  ## tack on some metadata
+  injuries <- dplyr::left_join(injuries, players)
+  injuries <- dplyr::left_join(injuries, teams)
+  
+  ## cleanup
+  injuries <- dplyr::select(injuries, -division_id, -league_id)
+  injuries$season_slug <- season_id
   
   ## ensure a dataframe
-  stopifnot(is.data.frame(games))
+  stopifnot(is.data.frame(injuries))
+  
+  ## ensure unique
+  injuries <- unique(injuries)
   
   ## return the datafarme
-  return(games)
+  return(injuries)
   
 }
   

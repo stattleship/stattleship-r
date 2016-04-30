@@ -54,10 +54,34 @@ baseball_games <- function(league = "mlb",
                             verbose = verbose)
   
   ## return the data
-  games <- do.call("rbind", lapply(tmp_call, function(x) x$games))
+  games <- parse_stattle(tmp_call, "games")
+  away_teams <- parse_stattle(tmp_call, "away_teams")
+  home_teams <- parse_stattle(tmp_call, "home_teams")
   
-  ## ensure a dataframe
-  stopifnot(is.data.frame(games))
+  ## ensure unique
+  games <- unique(games)
+  away_teams <- unique(away_teams)
+  home_teams <- unique(home_teams)
+  
+  ## cleanup the teams
+  away_teams <- clean_sideload_teams(away_teams, "away_team")
+  home_teams <- clean_sideload_teams(home_teams, "home_team")
+  
+  ## drop the division and away_teams from each
+  away_teams$division_id <- NULL
+  away_teams$league_id <- NULL
+  home_teams$division_id <- NULL
+  home_teams$league_id <- NULL
+  
+  ## merge the data
+  games <- dplyr::left_join(games, away_teams)
+  games <- dplyr::left_join(games, home_teams)
+  
+  ## home team win indicator and season from the call
+  games$season_slug = season_id
+  
+  ## ensure unique
+  games <- unique(games)
   
   ## return the datafarme
   return(games)
