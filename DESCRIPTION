@@ -5,7 +5,7 @@ Author: Brock Tibert, Tanya Cashorali
 Maintainer: Tanya Cashorali <tanyacash@gmail.com>
 Description: Provides an easy to use R wrapper around the Stattleship API that
     enables users to bring useful sports stats directly into their R environment.
-Depends: 
+Depends:
     R (>= 3.2.2),
     jsonlite,
     httr,
@@ -13,4 +13,7 @@ Depends:
 License: MIT + file LICENSE
 LazyData: true
 RoxygenNote: 5.0.1.9000
-Suggests: testthat
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

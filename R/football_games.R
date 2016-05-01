@@ -5,7 +5,7 @@
 #' @param league character. The football league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. nfl is default.
 #' @param team_id character.  The team id, can be in the form of the slug "nfl-ne".  Default is the Boston Red Sox, nfl-ne.
 #' @param interval_type character.  The season interval.  Default is regularseason.
-#' @param season_id character.  The season.  Default is nfl-2015.
+#' @param season_id character.  The season.  Default is nfl-2015-2016.
 #' @param status character.  That status of the game.  Default is ended.
 #' @param verbose logical.  TRUE will print messages to the console.  Default is TRUE.
 #' 
@@ -20,11 +20,11 @@
 #' football_games
 
 football_games <- function(league = "nfl", 
-                             team_id = "nfl-ne", 
-                             interval_type = "regularseason", 
-                             season_id = "nfl-2015",
-                             status = "ended",
-                             verbose = TRUE) {
+                           team_id = "nfl-ne", 
+                           interval_type = "week", 
+                           season_id = "nfl-2015-2016",
+                           status = "ended",
+                           verbose = TRUE) {
   
   ## quick validation
   league <- tolower(league)

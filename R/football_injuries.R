@@ -21,7 +21,7 @@
 football_injuries <- function(league = "nfl", 
                               team_id = "nfl-ne", 
                               interval_type = "regularseason", 
-                              season_id = "nfl-2016",
+                              season_id = "nfl-2015-2016",
                               verbose = TRUE) {
   
   ## quick validation

@@ -5,7 +5,8 @@
 \title{Retrieve players for a given league, team and season during a specific time interval.}
 \usage{
 football_players(league = "nfl", team_id = "nfl-ne",
-  interval_type = "regularseason", season_id = "nfl-2015", verbose = TRUE)
+  interval_type = "regularseason", season_id = "nfl-2015-2016",
+  verbose = TRUE)
 }
 \arguments{
 \item{league}{character. The hockey league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. nfl the default.}
@@ -14,7 +15,7 @@ football_players(league = "nfl", team_id = "nfl-ne",
 
 \item{interval_type}{character.  The season interval.  Default is regularseason.}
 
-\item{season_id}{character.  The season.  Default is nfl-2015.}
+\item{season_id}{character.  The season.  Default is nfl-2015-2016.}
 
 \item{verbose}{logical.  TRUE will print messages to the console.  Default is TRUE.}
 }

@@ -4,9 +4,8 @@
 \alias{football_games}
 \title{Retrieve the available football games for a given league, team and season during a specific time interval.}
 \usage{
-football_games(league = "nfl", team_id = "nfl-ne",
-  interval_type = "regularseason", season_id = "nfl-2015",
-  status = "ended", verbose = TRUE)
+football_games(league = "nfl", team_id = "nfl-ne", interval_type = "week",
+  season_id = "nfl-2015-2016", status = "ended", verbose = TRUE)
 }
 \arguments{
 \item{league}{character. The football league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. nfl is default.}
@@ -15,7 +14,7 @@ football_games(league = "nfl", team_id = "nfl-ne",
 
 \item{interval_type}{character.  The season interval.  Default is regularseason.}
 
-\item{season_id}{character.  The season.  Default is nfl-2015.}
+\item{season_id}{character.  The season.  Default is nfl-2015-2016.}
 
 \item{status}{character.  That status of the game.  Default is ended.}
 

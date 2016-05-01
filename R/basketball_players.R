@@ -19,10 +19,10 @@
 #' basketball_players
 
 basketball_players <- function(league = "nba", 
-                           team_id = "nba-bos", 
-                           interval_type = "regularseason", 
-                           season_id = "nba-2015-2016",
-                           verbose = TRUE) {
+                               team_id = "nba-bos", 
+                               interval_type = "regularseason", 
+                               season_id = "nba-2015-2016",
+                               verbose = TRUE) {
   
   ## quick validation
   league <- tolower(league)
@@ -44,7 +44,7 @@ basketball_players <- function(league = "nba",
 
   
   ## retrieve the players for a team in a league
-  tmp_call <- ss_get_result(sport = "baseball", 
+  tmp_call <- ss_get_result(sport = "basketball", 
                             league = league,
                             ep = "players",
                             query = q_body,
