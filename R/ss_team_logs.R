@@ -1,0 +1,101 @@
+#' Helper to get team game logs for a specified team in a sport and league
+#' 
+#' A function to interface and make it easier to get team game logs for a team in a sport/league.
+#' 
+#' @param sport character. The sport of the team
+#' @param league character. The hockey league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. 
+#' NHL is default.
+#' @param team_id character.  Optional. The team id, can be in the form of the slug "nhl-bos".  
+#' Default is all teams (empty character).
+#' @param interval_type character.  The season interval.  Default is regularseason.
+#' @param season_id character.  The season.  Default is nhl-2015-2016.
+#' @param status character.  The status of the game.  Ended is default.
+#' @param game_id character.  Optional. A specific game of interest.
+#' @param verbose logical.  TRUE will print messages to the console.  Default is TRUE.
+#' 
+#' @return a dataframe of the teams game logs
+#' 
+#' @examples 
+#' \dontrun{
+#' set_token("insert-your-token-here")
+#' bos_logs <- ss_team_logs(league="nhl", team_id="nhl-bos") 
+#' }
+#' @export
+#' ss_team_logs
+
+ss_team_logs <- function(sport = "hockey",
+                         league = "nhl", 
+                         team_id = "nhl-bos", 
+                         interval_type = "regularseason", 
+                         season_id = "nhl-2015-2016",
+                         status = "ended",
+                         game_id = "",
+                         verbose = TRUE) {
+  
+  ## quick validation
+  league <- tolower(league)
+  sport <- tolower(sport)
+  stopifnot(is.character(league),
+            league %in% c("nhl", "mlb", "nba", "nfl"),
+            sport %in% c("baseball", "basketball", "football", "hockey"),
+            is.logical(verbose),
+            is.character(team_id),
+            length(team_id)==1,
+            length(status)==1)
+  
+  ## put the team into a list if there was one specified
+  q_body <- list()
+  if (nchar(team_id) > 0) {
+    q_body <- list(team_id = team_id,
+                   season_id = season_id,
+                   interval_type = interval_type,
+                   status = status,
+                   game_id = game_id)
+  }
+  
+  ## retrieve the players for a team in a league
+  tmp_call <- ss_get_result(sport = sport, 
+                            league = league,
+                            ep = "team_game_logs",
+                            query = q_body,
+                            walk = TRUE, 
+                            verbose = verbose)
+  
+  ## pull out the data
+  gls <- parse_stattle(tmp_call, "team_game_logs")
+  teams <- parse_stattle(tmp_call, "teams")
+  games <- parse_stattle(tmp_call, "games")
+  venues <- parse_stattle(tmp_call, "venues")
+  away_teams <- parse_stattle(tmp_call, "away_teams")
+  home_teams <- parse_stattle(tmp_call, "home_teams")
+  
+  ## combine the teams
+  teams_opp <- rbind(away_teams, home_teams)
+  teams_opp <- unique(teams_opp)
+  
+  ## cleanup the data
+  teams <- clean_sideload_teams(teams, prefix="team")
+  teams_opp <- clean_sideload_teams(teams_opp, prefix="opponent")
+  games <- clean_sideload_games(games, prefix="game")
+  venues <- clean_sideload_venues(venues, prefix="game_venue")
+  
+  ## merge together for a big dataset
+  gls <- dplyr::left_join(gls, teams)  ## append the gamelog's team info
+  gls <- dplyr::left_join(gls, teams_opp)  ## opponent info
+  gls <- dplyr::left_join(gls, games)
+  gls <- dplyr::left_join(gls, venues)
+  
+  ## ensure unique
+  gls <- unique(gls)
+  
+  ## return the datafarme
+  return(gls)
+  
+}
+  
+  
+  
+  
+  
+  
+  
