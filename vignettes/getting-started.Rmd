@@ -1,5 +1,4 @@
 ---
-title: "Overview of stattleshipR"
 author: "@brocktibert"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -9,50 +8,154 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+```{r echo=F, warning=FALSE, message=FALSE}
+options(stringsAsFactors=FALSE)
+knitr::opts_chunk$set(comment = NA)
+knitr::opts_chunk$set(warning = F)
+knitr::opts_chunk$set(message = F)
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+## load the packages
+library(stattleshipR)
+library(dplyr)
 
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+## Before you begin
 
-## More Examples
+This document is meant to be a quick start guide and introduce the new features added to the package in version `1.0`.  For an excellent overview of what is possible check out this [great post](http://blog.stattleship.com/stop-scraping-for-sports-data-start-stattleshipping/).
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+If you don't already have an API token, you will need to signup for our API in order to use the `stattleshipR` package.  Please visit [our site](https://www.stattleship.com/) to get started.  
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+Once you have a token, simply install the package with:
+
+```{r eval=FALSE}
+install.packages("devtools")  
+devtools::install_github("stattleship/stattleship-r")
+
+## Load the stattleshipR package
+library(stattleshipR)  
 ```
 
-Also a quote using `>`:
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+Lastly, you will need to initalize your token with `set_token`. 
+
+```{r eval=FALSE}
+set_token("your-API-token-goes-here") 
+```
+
+
+It's worth nothing that you may want to store your token as an environment variable.  In that case, you can load it with:
+
+```{r}
+set_token(Sys.getenv("STATTLE_TOKEN"))
+```
+
+where `STATTLE_TOKEN` is the environment variable on your system.
+
+We also recommend the `dplyr`.  
+
+```{r eval=FALSE}
+library(dplyr)
+```
+
+If you don't have `dplyr`, you can install it with `install.packages(dplyr)`.
+
+## What's new
+
+As noted in Tanya's post, you see that the workhorse of the package is `ss_get_result` which allows you to access our entire API.  However, it was obvious that we wanted to make a few things easier, especially for common use-cases.  The following helpers were added in version `1.0`.
+
+#### General Helpers  
+
+-  `list_sideload`  
+-  `parse_stattle`
+-  `ss_keep_cols`
+
+#### Sport-specific helpers
+
+-  `*_teams`  
+-  `*_games`  
+-  `*_players`  
+-  `*_injuries`  
+
+where `*` is `hockey`, `football`, `baseball`, and `basketball`.  For example, `hockey_injuries` or `baseball_teams`.
+
+#### Game logs
+
+We also added helpers around team and player game logs, respectively.
+
+- `ss_team_logs`  
+-  `ss_player_logs`
+
+
+## `list_sideload`
+
+In this release, we added `list_sideload` which allows you to evaluate the datasets that get returned from a call to `ss_get_result`.  
+
+Let's make a call to get all of the teams in MLB.
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE, error= FALSE, comment=NA}
+teams_raw <- ss_get_result(sport="baseball", league = "mlb", ep = "teams")
+```
+
+We added`list_sideload` to view the datasets that come back from `ss_get_result`.  
+
+```{r}
+list_sideload(teams_raw)
+```
+
+In this particular case, not only did we get return the `teams`, but we have other data as well, which can be used to merge on additional facts and features to our data.  
+
+
+## `parse_stattle`  
+
+Previously, calls to `ss_get_result` would require that you do the `do.call` dance to pull out `data_frames` of data.  Below is an example of using `do.call` to grab the `teams` dataset, and printing the first few team hashtags.
+
+```{r}
+mlb_teams <- do.call('rbind', lapply(teams_raw, function(x) x$teams))
+head(mlb_teams$hashtag)
+```
+
+But now, you can do this more succintly with `parse_stattle`
+
+```{r}
+mlb_teams2 <- parse_stattle(teams_raw, "teams")
+head(mlb_teams2$hashtag)
+```
+
+
+## Sport specific helpers
+
+As noted above, we added helpers around the `teams`, `games`, `players` and `injuries` endpoints in order to make it easier to extract the data of interest.  In short, you won't have to worry about merging a variety of data; we simply return a complete dataset for your to work with.
+
+For example, instead of using `ss_get_result` to pull out the teams in MLB, you can use `baseball_teams`
+
+```{r}
+mlb_teams3 <- baseball_teams()
+head(mlb_teams3$team_hashtag)
+```
+
+You will notice above that you had to change `hashtag` to `team_hashtag`.  This is an artifact of the merging process in order to retain the variables for you to use.  
+
+With that in mind, let's look at all of the data that came back in that simple call
+
+```{r}
+colnames(mlb_teams3)
+```
+
+How about isolating the patriots games, both home and away, in cloudy games.
+
+```{r}
+pats_games <- football_games() %>% 
+  filter(weather_conditions=="cloudy")
+tbl_df(pats_games) %>% select(., slug, passing_touch_downs) %>% print(n=5)
+```
+
+
+
+
+
+
+
+

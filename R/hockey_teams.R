@@ -16,6 +16,7 @@
 #' hockey_teams
 
 hockey_teams <- function(league="nhl", verbose=TRUE) {
+  
   ## quick validation
   league <- tolower(league)
   stopifnot(is.character(league),
@@ -44,7 +45,7 @@ hockey_teams <- function(league="nhl", verbose=TRUE) {
   ## merge divs and confs
   confs <-  dplyr::inner_join(confs, lgs)
   divs <- dplyr::inner_join(divs, confs)
-  teams <- dplyr::inner_join(teams, divs)
+  teams <- dplyr::inner_join(teams, divs, by=c("team_division_id"="division_id"))
   
   ## ensure a dataframe
   stopifnot(is.data.frame(teams))

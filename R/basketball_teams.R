@@ -44,7 +44,7 @@ basketball_teams <- function(league="nba", verbose=TRUE) {
   ## merge divs and confs
   confs <-  dplyr::inner_join(confs, lgs)
   divs <- dplyr::inner_join(divs, confs)
-  teams <- dplyr::inner_join(teams, divs)
+  teams <- dplyr::inner_join(teams, divs, by=c("team_division_id"="division_id"))
   
   ## ensure a dataframe
   stopifnot(is.data.frame(teams))
