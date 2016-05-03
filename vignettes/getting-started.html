@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="@brocktibert" />
+
+<meta name="date" content="2016-05-03" />
+
+<title></title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+</style>
+
+
+<link href="data:text/css,body%20%7B%0A%20%20background%2Dcolor%3A%20%23fff%3B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20max%2Dwidth%3A%20700px%3B%0A%20%20overflow%3A%20visible%3B%0A%20%20padding%2Dleft%3A%202em%3B%0A%20%20padding%2Dright%3A%202em%3B%0A%20%20font%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%20%20font%2Dsize%3A%2014px%3B%0A%20%20line%2Dheight%3A%201%2E35%3B%0A%7D%0A%0A%23header%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0A%0A%23TOC%20%7B%0A%20%20clear%3A%20both%3B%0A%20%20margin%3A%200%200%2010px%2010px%3B%0A%20%20padding%3A%204px%3B%0A%20%20width%3A%20400px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20border%2Dradius%3A%205px%3B%0A%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20font%2Dsize%3A%2013px%3B%0A%20%20line%2Dheight%3A%201%2E3%3B%0A%7D%0A%20%20%23TOC%20%2Etoctitle%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%20%20font%2Dsize%3A%2015px%3B%0A%20%20%20%20margin%2Dleft%3A%205px%3B%0A%20%20%7D%0A%0A%20%20%23TOC%20ul%20%7B%0A%20%20%20%20padding%2Dleft%3A%2040px%3B%0A%20%20%20%20margin%2Dleft%3A%20%2D1%2E5em%3B%0A%20%20%20%20margin%2Dtop%3A%205px%3B%0A%20%20%20%20margin%2Dbottom%3A%205px%3B%0A%20%20%7D%0A%20%20%23TOC%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dleft%3A%20%2D2em%3B%0A%20%20%7D%0A%20%20%23TOC%20li%20%7B%0A%20%20%20%20line%2Dheight%3A%2016px%3B%0A%20%20%7D%0A%0Atable%20%7B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dcolor%3A%20%23DDDDDD%3B%0A%20%20border%2Dstyle%3A%20outset%3B%0A%20%20border%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0A%20%20border%2Dwidth%3A%202px%3B%0A%20%20padding%3A%205px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%20%20line%2Dheight%3A%2018px%3B%0A%20%20padding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0A%20%20border%2Dleft%2Dstyle%3A%20none%3B%0A%20%20border%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%2E5em%200%3B%0A%7D%0A%0Ablockquote%20%7B%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20padding%3A%200%2E25em%200%2E75em%3B%0A%7D%0A%0Ahr%20%7B%0A%20%20border%2Dstyle%3A%20solid%3B%0A%20%20border%3A%20none%3B%0A%20%20border%2Dtop%3A%201px%20solid%20%23777%3B%0A%20%20margin%3A%2028px%200%3B%0A%7D%0A%0Adl%20%7B%0A%20%20margin%2Dleft%3A%200%3B%0A%7D%0A%20%20dl%20dd%20%7B%0A%20%20%20%20margin%2Dbottom%3A%2013px%3B%0A%20%20%20%20margin%2Dleft%3A%2013px%3B%0A%20%20%7D%0A%20%20dl%20dt%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%7D%0A%0Aul%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%7D%0A%20%20ul%20li%20%7B%0A%20%20%20%20list%2Dstyle%3A%20circle%20outside%3B%0A%20%20%7D%0A%20%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dbottom%3A%200%3B%0A%20%20%7D%0A%0Apre%2C%20code%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20color%3A%20%23333%3B%0A%20%20white%2Dspace%3A%20pre%2Dwrap%3B%20%20%20%20%2F%2A%20Wrap%20long%20lines%20%2A%2F%0A%7D%0Apre%20%7B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20margin%3A%205px%200px%2010px%200px%3B%0A%20%20padding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Acode%20%7B%0A%20%20font%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0A%20%20font%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0A%20%20padding%3A%202px%200px%3B%0A%7D%0A%0Adiv%2Efigure%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0A%20%20background%2Dcolor%3A%20%23FFFFFF%3B%0A%20%20padding%3A%202px%3B%0A%20%20border%3A%201px%20solid%20%23DDDDDD%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20margin%3A%200%205px%3B%0A%7D%0A%0Ah1%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%20%20font%2Dsize%3A%2035px%3B%0A%20%20line%2Dheight%3A%2040px%3B%0A%7D%0A%0Ah2%20%7B%0A%20%20border%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20padding%2Dbottom%3A%202px%3B%0A%20%20font%2Dsize%3A%20145%25%3B%0A%7D%0A%0Ah3%20%7B%0A%20%20border%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20font%2Dsize%3A%20120%25%3B%0A%7D%0A%0Ah4%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0A%20%20margin%2Dleft%3A%208px%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Ah5%2C%20h6%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23ccc%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Aa%20%7B%0A%20%20color%3A%20%230033dd%3B%0A%20%20text%2Ddecoration%3A%20none%3B%0A%7D%0A%20%20a%3Ahover%20%7B%0A%20%20%20%20color%3A%20%236666ff%3B%20%7D%0A%20%20a%3Avisited%20%7B%0A%20%20%20%20color%3A%20%23800080%3B%20%7D%0A%20%20a%3Avisited%3Ahover%20%7B%0A%20%20%20%20color%3A%20%23BB00BB%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%0A%2F%2A%20Class%20described%20in%20https%3A%2F%2Fbenjeffrey%2Ecom%2Fposts%2Fpandoc%2Dsyntax%2Dhighlighting%2Dcss%0A%20%20%20Colours%20from%20https%3A%2F%2Fgist%2Egithub%2Ecom%2Frobsimmons%2F1172277%20%2A%2F%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Keyword%20%2A%2F%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%2F%2A%20DataType%20%2A%2F%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%2F%2A%20DecVal%20%28decimal%20values%29%20%2A%2F%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20BaseN%20%2A%2F%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Float%20%2A%2F%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Char%20%2A%2F%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20String%20%2A%2F%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%2F%2A%20Comment%20%2A%2F%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%2F%2A%20OtherToken%20%2A%2F%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20AlertToken%20%2A%2F%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Function%20calls%20%2A%2F%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%2F%2A%20ErrorTok%20%2A%2F%0A%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+</div>
+
+
+<div id="stattleshipr" class="section level2">
+<h2>stattleshipR</h2>
+<p>This document is meant to be a quick start guide and introduce the new features added to the package in version <code>1.0</code>. For an excellent overview of what is possible check out this <a href="http://blog.stattleship.com/stop-scraping-for-sports-data-start-stattleshipping/">great post</a>.</p>
+</div>
+<div id="before-you-begin" class="section level2">
+<h2>Before you begin</h2>
+<p>If you don’t already have an API token, you will need to signup for our API in order to use the <code>stattleshipR</code> package. Please visit <a href="https://www.stattleship.com/">our site</a> to get started.</p>
+<p>Once you have a token, simply install the package with:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)  
+devtools::<span class="kw">install_github</span>(<span class="st">&quot;stattleship/stattleship-r&quot;</span>)
+
+## Load the stattleshipR package
+<span class="kw">library</span>(stattleshipR)  </code></pre>
+<p>Lastly, you will need to initialize your token with <code>set_token</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set_token</span>(<span class="st">&quot;your-API-token-goes-here&quot;</span>) </code></pre>
+<p>It’s worth nothing that you may want to store your token as an environment variable. In that case, you can load it with:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set_token</span>(<span class="kw">Sys.getenv</span>(<span class="st">&quot;STATTLE_TOKEN&quot;</span>))</code></pre>
+<p>where <code>STATTLE_TOKEN</code> is the environment variable on your system.</p>
+<p>We also recommend the <code>dplyr</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)</code></pre>
+<p>If you don’t have <code>dplyr</code>, you can install it with <code>install.packages(dplyr)</code>.</p>
+</div>
+<div id="whats-new" class="section level2">
+<h2>What’s new</h2>
+<p>As noted in Tanya’s post, you see that the workhorse of the package is <code>ss_get_result</code> which allows you to access our entire API. However, it was obvious that we wanted to make a few things easier, especially for common use-cases. The following helpers were added in version <code>1.0</code>.</p>
+<div id="general-helpers" class="section level4">
+<h4>General Helpers</h4>
+<ul>
+<li><code>list_sideload</code><br /></li>
+<li><code>parse_stattle</code></li>
+<li><code>ss_keep_cols</code></li>
+</ul>
+</div>
+<div id="sport-specific-helpers" class="section level4">
+<h4>Sport-specific helpers</h4>
+<ul>
+<li><code>*_teams</code><br /></li>
+<li><code>*_games</code><br /></li>
+<li><code>*_players</code><br /></li>
+<li><code>*_injuries</code></li>
+</ul>
+<p>where <code>*</code> is <code>hockey</code>, <code>football</code>, <code>baseball</code>, and <code>basketball</code>. For example, <code>hockey_injuries</code> or <code>baseball_teams</code>.</p>
+</div>
+<div id="game-logs" class="section level4">
+<h4>Game logs</h4>
+<p>We also added helpers around team and player game logs, respectively.</p>
+<ul>
+<li><code>ss_team_logs</code><br /></li>
+<li><code>ss_player_logs</code></li>
+</ul>
+</div>
+</div>
+<div id="list_sideload" class="section level2">
+<h2><code>list_sideload</code></h2>
+<p>In this release, we added <code>list_sideload</code> which allows you to evaluate the datasets that get returned from a call to <code>ss_get_result</code>.</p>
+<p>Let’s make a call to get all of the teams in MLB.</p>
+<pre class="sourceCode r"><code class="sourceCode r">teams_raw &lt;-<span class="st"> </span><span class="kw">ss_get_result</span>(<span class="dt">sport=</span><span class="st">&quot;baseball&quot;</span>, <span class="dt">league =</span> <span class="st">&quot;mlb&quot;</span>, <span class="dt">ep =</span> <span class="st">&quot;teams&quot;</span>)</code></pre>
+<pre><code>[1] &quot;Making initial API request&quot;</code></pre>
+<p>We added<code>list_sideload</code> to view the datasets that come back from <code>ss_get_result</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">list_sideload</span>(teams_raw)</code></pre>
+<pre><code>[1] &quot;divisions&quot;   &quot;conferences&quot; &quot;leagues&quot;     &quot;teams&quot;      </code></pre>
+<p>In this particular case, not only did we get return the <code>teams</code>, but we have other data as well, which can be used to merge on additional facts and features to our data.</p>
+</div>
+<div id="parse_stattle" class="section level2">
+<h2><code>parse_stattle</code></h2>
+<p>Previously, calls to <code>ss_get_result</code> would require that you do the <code>do.call</code> dance to pull out <code>data_frames</code> of data. Below is an example of using <code>do.call</code> to grab the <code>teams</code> dataset, and printing the first few team hashtags.</p>
+<pre class="sourceCode r"><code class="sourceCode r">mlb_teams &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">'rbind'</span>, <span class="kw">lapply</span>(teams_raw, function(x) x$teams))
+<span class="kw">head</span>(mlb_teams$hashtag)</code></pre>
+<pre><code>[1] &quot;DBacks&quot;   &quot;Braves&quot;   &quot;Orioles&quot;  &quot;RedSox&quot;   &quot;Cubs&quot;     &quot;WhiteSox&quot;</code></pre>
+<p>But now, you can do this more succinctly with <code>parse_stattle</code></p>
+<pre class="sourceCode r"><code class="sourceCode r">mlb_teams2 &lt;-<span class="st"> </span><span class="kw">parse_stattle</span>(teams_raw, <span class="st">&quot;teams&quot;</span>)
+<span class="kw">head</span>(mlb_teams2$hashtag)</code></pre>
+<pre><code>[1] &quot;DBacks&quot;   &quot;Braves&quot;   &quot;Orioles&quot;  &quot;RedSox&quot;   &quot;Cubs&quot;     &quot;WhiteSox&quot;</code></pre>
+</div>
+<div id="sport-specific-helpers-1" class="section level2">
+<h2>Sport specific helpers</h2>
+<p>As noted above, we added helpers around the <code>teams</code>, <code>games</code>, <code>players</code> and <code>injuries</code> endpoints in order to make it easier to extract the data of interest. In short, you won’t have to worry about merging a variety of data; we simply return a complete dataset for your to work with.</p>
+<p>For example, instead of using <code>ss_get_result</code> to pull out the teams in MLB, you can use <code>baseball_teams</code></p>
+<pre class="sourceCode r"><code class="sourceCode r">mlb_teams3 &lt;-<span class="st"> </span><span class="kw">baseball_teams</span>()</code></pre>
+<pre><code>[1] &quot;Making initial API request&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mlb_teams3$team_hashtag)</code></pre>
+<pre><code>[1] &quot;DBacks&quot;   &quot;Braves&quot;   &quot;Orioles&quot;  &quot;RedSox&quot;   &quot;Cubs&quot;     &quot;WhiteSox&quot;</code></pre>
+<p>You will notice above that you had to change <code>hashtag</code> to <code>team_hashtag</code>. This is an artifact of the merging process in order to retain the variables for you to use.</p>
+<p>With that in mind, let’s look at all of the data that came back in that simple call</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(mlb_teams3)</code></pre>
+<pre><code> [1] &quot;team_id&quot;          &quot;team_color&quot;       &quot;team_colors&quot;     
+ [4] &quot;team_hashtag&quot;     &quot;team_hashtags&quot;    &quot;team_location&quot;   
+ [7] &quot;team_name&quot;        &quot;team_nickname&quot;    &quot;team_latitude&quot;   
+[10] &quot;team_longitude&quot;   &quot;team_slug&quot;        &quot;team_division_id&quot;
+[13] &quot;team_league_id&quot;   &quot;division_name&quot;    &quot;conference_id&quot;   
+[16] &quot;conference_name&quot;  &quot;league_id&quot;        &quot;league_name&quot;     
+[19] &quot;league_slug&quot;      &quot;league_sport&quot;    </code></pre>
+<p>How about isolating the patriots games, both home and away, in cloudy games.</p>
+<pre class="sourceCode r"><code class="sourceCode r">## get the data with the defaults set to New England
+pats_games &lt;-<span class="st"> </span><span class="kw">football_games</span>() %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(weather_conditions==<span class="st">&quot;cloudy&quot;</span>)</code></pre>
+<pre><code>[1] &quot;Making initial API request&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">## keep columns and print a few rows
+<span class="kw">tbl_df</span>(pats_games) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(interval, on, score_differential) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">print</span>(<span class="dt">n=</span><span class="dv">5</span>)</code></pre>
+<pre><code>Source: local data frame [6 x 3]
+
+   interval                   on score_differential
+      (chr)                (chr)              (int)
+1   Week 17  on January  3, 2016                 10
+2   Week 16 on December 27, 2015                  6
+3   Week 14 on December 13, 2015                 21
+4    Week 8  on October 29, 2015                 29
+5    Week 7  on October 25, 2015                  7
+..      ...                  ...                ...</code></pre>
+<p>The simply syntax is <code>*_teams/games/players/injuries</code> where <code>*</code> is the sport of interest.</p>
+</div>
+<div id="ss_team_logs" class="section level2">
+<h2><code>ss_team_logs</code></h2>
+<p>In this release, we also added a helper to grab a team’s game logs. This can be used across all for sports and leagues currently supported.</p>
+<p>For example, let’s pull down the Celtic’s game logs for the 2015-2016 regular season.</p>
+<pre class="sourceCode r"><code class="sourceCode r">celts_gls &lt;-<span class="st"> </span><span class="kw">ss_team_logs</span>(<span class="dt">sport=</span><span class="st">&quot;basketball&quot;</span>, 
+                          <span class="dt">league=</span><span class="st">&quot;nba&quot;</span>, 
+                          <span class="dt">team_id=</span><span class="st">&quot;nba-bos&quot;</span>, 
+                          <span class="dt">season_id=</span><span class="st">&quot;nba-2015-2016&quot;</span>)</code></pre>
+<pre><code>[1] &quot;Making initial API request&quot;
+[1] &quot;Retrieving results from page 2 of 3&quot;
+[1] &quot;Retrieving results from page 3 of 3&quot;</code></pre>
+<p>What do we have for columns of data?</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(celts_gls)</code></pre>
+<pre><code>  [1] &quot;id&quot;                          &quot;created_at&quot;                 
+  [3] &quot;updated_at&quot;                  &quot;home_team_outcome&quot;          
+  [5] &quot;home_team_score&quot;             &quot;away_team_outcome&quot;          
+  [7] &quot;away_team_score&quot;             &quot;team_outcome&quot;               
+  [9] &quot;opponent_outcome&quot;            &quot;opponent_score&quot;             
+ [11] &quot;is_home_team&quot;                &quot;is_away_team&quot;               
+ [13] &quot;team_score&quot;                  &quot;assists_total&quot;              
+ [15] &quot;blocks_total&quot;                &quot;coach_technical_fouls&quot;      
+ [17] &quot;field_goals_attempted&quot;       &quot;field_goals_made&quot;           
+ [19] &quot;field_goals_percentage&quot;      &quot;free_throws_attempted&quot;      
+ [21] &quot;free_throws_made&quot;            &quot;free_throws_percentage&quot;     
+ [23] &quot;personal_fouls&quot;              &quot;points_biggest_lead&quot;        
+ [25] &quot;points_fast_break&quot;           &quot;points_highest&quot;             
+ [27] &quot;points_in_paint&quot;             &quot;points_overtime&quot;            
+ [29] &quot;points_overtime_1&quot;           &quot;points_overtime_2&quot;          
+ [31] &quot;points_overtime_3&quot;           &quot;points_overtime_4&quot;          
+ [33] &quot;points_overtime_5&quot;           &quot;points_quarter_1&quot;           
+ [35] &quot;points_quarter_2&quot;            &quot;points_quarter_3&quot;           
+ [37] &quot;points_quarter_4&quot;            &quot;points_scored_off_turnovers&quot;
+ [39] &quot;points_scored_total&quot;         &quot;points_unanswered&quot;          
+ [41] &quot;rebounds_defensive&quot;          &quot;rebounds_offensive&quot;         
+ [43] &quot;rebounds_total&quot;              &quot;steals_total&quot;               
+ [45] &quot;team_rebounds_total&quot;         &quot;team_turnovers_total&quot;       
+ [47] &quot;technical_fouls&quot;             &quot;three_pointers_attempted&quot;   
+ [49] &quot;three_pointers_made&quot;         &quot;three_pointers_percentage&quot;  
+ [51] &quot;turnovers_total&quot;             &quot;game_id&quot;                    
+ [53] &quot;opponent_id&quot;                 &quot;team_id&quot;                    
+ [55] &quot;team_color&quot;                  &quot;team_colors&quot;                
+ [57] &quot;team_hashtag&quot;                &quot;team_hashtags&quot;              
+ [59] &quot;team_location&quot;               &quot;team_name&quot;                  
+ [61] &quot;team_nickname&quot;               &quot;team_latitude&quot;              
+ [63] &quot;team_longitude&quot;              &quot;team_slug&quot;                  
+ [65] &quot;team_division_id&quot;            &quot;team_league_id&quot;             
+ [67] &quot;opponent_color&quot;              &quot;opponent_colors&quot;            
+ [69] &quot;opponent_hashtag&quot;            &quot;opponent_hashtags&quot;          
+ [71] &quot;opponent_location&quot;           &quot;opponent_name&quot;              
+ [73] &quot;opponent_nickname&quot;           &quot;opponent_latitude&quot;          
+ [75] &quot;opponent_longitude&quot;          &quot;opponent_slug&quot;              
+ [77] &quot;opponent_division_id&quot;        &quot;opponent_league_id&quot;         
+ [79] &quot;game_at_neutral_site&quot;        &quot;game_attendance&quot;            
+ [81] &quot;game_away_team_outcome&quot;      &quot;game_away_team_score&quot;       
+ [83] &quot;game_daytime&quot;                &quot;game_duration&quot;              
+ [85] &quot;game_ended_at&quot;               &quot;game_home_team_outcome&quot;     
+ [87] &quot;game_home_team_score&quot;        &quot;game_interval&quot;              
+ [89] &quot;game_interval_number&quot;        &quot;game_interval_type&quot;         
+ [91] &quot;game_label&quot;                  &quot;game_name&quot;                  
+ [93] &quot;game_on&quot;                     &quot;game_score&quot;                 
+ [95] &quot;game_score_differential&quot;     &quot;game_scoreline&quot;             
+ [97] &quot;game_slug&quot;                   &quot;game_started_at&quot;            
+ [99] &quot;game_status&quot;                 &quot;game_temperature&quot;           
+[101] &quot;game_temperature_unit&quot;       &quot;game_timestamp&quot;             
+[103] &quot;game_title&quot;                  &quot;game_weather_conditions&quot;    
+[105] &quot;game_wind_direction&quot;         &quot;game_wind_speed&quot;            
+[107] &quot;game_wind_speed_unit&quot;        &quot;game_home_team_id&quot;          
+[109] &quot;game_away_team_id&quot;           &quot;game_winning_team_id&quot;       
+[111] &quot;game_season_id&quot;              &quot;game_venue_id&quot;              
+[113] &quot;game_official_ids&quot;           &quot;game_venue_abbreviation&quot;    
+[115] &quot;game_venue_capacity&quot;         &quot;game_venue_city&quot;            
+[117] &quot;game_venue_country&quot;          &quot;game_venue_field_type&quot;      
+[119] &quot;game_venue_name&quot;             &quot;game_venue_slug&quot;            
+[121] &quot;game_venue_state&quot;            &quot;game_venue_time_zone&quot;       
+[123] &quot;game_venue_latitude&quot;         &quot;game_venue_longitude&quot;       </code></pre>
+<p>You can see that we have quite a bit of data. Under the hood, we are binding on number of datasets, including information about the teams as well as the game itself, including the venue!</p>
+</div>
+<div id="ss_keep_cols" class="section level2">
+<h2><code>ss_keep_cols</code></h2>
+<p>When you start to dig into game logs, you will probably want to keep certain columns of interest. Because we didn’t want limit the columns for you, more than likely you will want to make heavy use of <code>ss_keep_cols</code>, which will return the same dataset, but keep only the columns of interest. All that you need to do is supply a character vector of column names.</p>
+<p>Going back to the Celtics game logs, we can restrict all of that data to just a few columns.</p>
+<pre class="sourceCode r"><code class="sourceCode r">mycols &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;game_label&quot;</span>, <span class="st">&quot;is_home_team&quot;</span>, <span class="st">&quot;points_scored_total&quot;</span>, <span class="st">&quot;game_venue_name&quot;</span>)
+celts_limited_cols &lt;-<span class="st"> </span><span class="kw">ss_keep_cols</span>(celts_gls, mycols)
+<span class="kw">head</span>(celts_limited_cols)</code></pre>
+<pre><code>            game_label is_home_team points_scored_total
+1     Celtics vs Magic        FALSE                 114
+2   Celtics vs Rockets        FALSE                 111
+3    Celtics vs Knicks        FALSE                 114
+4     Celtics vs Hawks        FALSE                  97
+5   Wizards vs Celtics         TRUE                 111
+6 Cavaliers vs Celtics         TRUE                  77
+        game_venue_name
+1          Amway Center
+2         Toyota Center
+3 Madison Square Garden
+4         Philips Arena
+5             TD Garden
+6             TD Garden</code></pre>
+<p>By not restricting the columns, the <code>ss_team_logs</code> we are able to keep this call the API sport agnostic. You can use the same syntax for any of the leagues that we support.</p>
+</div>
+<div id="ss_player_logs" class="section level2">
+<h2><code>ss_player_logs</code></h2>
+<p>Just like team logs, we also have a helper <code>ss_player_logs</code> which enables you to get the game logs at the player level.</p>
+<p>Below, we are going to get the game logs for Brad Marchand.</p>
+<pre class="sourceCode r"><code class="sourceCode r">marchy &lt;-<span class="st"> </span><span class="kw">ss_player_logs</span>(<span class="dt">player_id=</span><span class="st">&quot;nhl-brad-marchand&quot;</span>)</code></pre>
+<pre><code>[1] &quot;Making initial API request&quot;
+[1] &quot;Retrieving results from page 2 of 2&quot;</code></pre>
+<p>The above col is only supplying one parameter, but you should look at the available options via <code>?ss_player_logs</code>.</p>
+<p>As with <code>ss_team_logs</code>, we return a larger dataframe with a number of data elements merged on for you already, including information about the game, the venue, and the player’s biographical info.</p>
+<p>Again, we can simply use <code>ss_keep_cols</code> to filter the columns of interest.</p>
+<pre class="sourceCode r"><code class="sourceCode r">mycols &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;game_on&quot;</span>, <span class="st">&quot;goals&quot;</span>, <span class="st">&quot;opponent_slug&quot;</span>, <span class="st">&quot;opponent_color&quot;</span>, <span class="st">&quot;game_attendance&quot;</span>, <span class="st">&quot;game_venue&quot;</span>)
+<span class="kw">ss_keep_cols</span>(marchy, mycols) %&gt;%<span class="st"> </span>head</code></pre>
+<pre><code>                game_on goals opponent_slug opponent_color game_attendance
+1     on March 23, 2016     0       nhl-nyr         0161AB           18006
+3     on March 18, 2016     0       nhl-ana         000000           16707
+5  on December 14, 2015     1       nhl-edm         003777           17565
+7   on January 19, 2016     1       nhl-mon         BF2F38           21288
+9  on December 18, 2015     0       nhl-pit         000000           18585
+11  on October 31, 2015     1        nhl-tb         013E7D           19092</code></pre>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
