@@ -64,7 +64,7 @@ football_injuries <- function(league = "nfl",
   injuries <- dplyr::left_join(injuries, teams)
   
   ## cleanup
-  injuries <- dplyr::select(injuries, -division_id, -league_id)
+  #injuries <- dplyr::select(injuries, -division_id, -league_id)
   injuries$season_slug <- season_id
   
   ## ensure a dataframe
