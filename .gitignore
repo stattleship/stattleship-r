@@ -8,6 +8,6 @@
 .Rproj.user/
 stattleshipR.Rproj
 # produced vignettes
-#vignettes/*.html
-#vignettes/*.pdf
+vignettes/*.html
+vignettes/*.pdf
 inst/doc
