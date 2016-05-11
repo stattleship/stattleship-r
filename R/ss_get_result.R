@@ -165,7 +165,7 @@ ss_get_result <- function(token,
   ## info for the User-Agent header
   platform <- sessionInfo()$platform
   package_v <- packageVersion("stattleshipR")
-  UA <- sprintf("StattleshipR/%s (%s)", package_v, platform)
+  UA <- sprintf("Stattleship-R/%s (%s)", package_v, platform)
 
   ## get the request from the API
   resp <- GET(URL,
