@@ -12,6 +12,7 @@
 #' @param status character.  The status of the game.  Ended is default.
 #' @param game_id character.  Optional. A specific game of interest.
 #' @param verbose logical.  TRUE will print messages to the console.  Default is TRUE.
+#' @param walk logical.  TRUE will retrieve all of the pages. Default is TRUE.
 #' 
 #' @return a dataframe of the teams game logs
 #' 
@@ -30,7 +31,8 @@ ss_team_logs <- function(sport = "hockey",
                          season_id = "nhl-2015-2016",
                          status = "ended",
                          game_id = "",
-                         verbose = TRUE) {
+                         verbose = TRUE,
+                         walk = TRUE) {
   
   ## quick validation
   league <- tolower(league)
@@ -43,14 +45,17 @@ ss_team_logs <- function(sport = "hockey",
             length(team_id)==1,
             length(status)==1)
   
-  ## put the team into a list if there was one specified
-  q_body <- list()
+  ## the core body
+  q_body <- list(season_id = season_id,
+                 interval_type = interval_type,
+                 status = status)
+  ## conditioned on team
   if (nchar(team_id) > 0) {
-    q_body <- list(team_id = team_id,
-                   season_id = season_id,
-                   interval_type = interval_type,
-                   status = status,
-                   game_id = game_id)
+    q_body = c(q_body, teamd_id = team_id)
+  }
+  ## condidtioned on game
+  if (nchar(game_id) > 0) {
+    q_body = c(q_body, game_id = game_id)
   }
   
   ## retrieve the players for a team in a league
@@ -58,7 +63,7 @@ ss_team_logs <- function(sport = "hockey",
                             league = league,
                             ep = "team_game_logs",
                             query = q_body,
-                            walk = TRUE, 
+                            walk = walk, 
                             verbose = verbose)
   
   ## pull out the data

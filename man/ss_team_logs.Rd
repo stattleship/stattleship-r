@@ -6,7 +6,7 @@
 \usage{
 ss_team_logs(sport = "hockey", league = "nhl", team_id = "nhl-bos",
   interval_type = "regularseason", season_id = "nhl-2015-2016",
-  status = "ended", game_id = "", verbose = TRUE)
+  status = "ended", game_id = "", verbose = TRUE, walk = TRUE)
 }
 \arguments{
 \item{sport}{character. The sport of the team}
@@ -26,6 +26,8 @@ Default is all teams (empty character).}
 \item{game_id}{character.  Optional. A specific game of interest.}
 
 \item{verbose}{logical.  TRUE will print messages to the console.  Default is TRUE.}
+
+\item{walk}{logical.  TRUE will retrieve all of the pages. Default is TRUE.}
 }
 \value{
 a dataframe of the teams game logs
