@@ -51,7 +51,7 @@ ss_team_logs <- function(sport = "hockey",
                  status = status)
   ## conditioned on team
   if (nchar(team_id) > 0) {
-    q_body = c(q_body, teamd_id = team_id)
+    q_body = c(q_body, team_id = team_id)
   }
   ## condidtioned on game
   if (nchar(game_id) > 0) {
