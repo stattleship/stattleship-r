@@ -66,6 +66,11 @@ ss_team_logs <- function(sport = "hockey",
                             walk = walk, 
                             verbose = verbose)
   
+  ## get the teams from the API because the division data is lacking
+  tmp_team <- ss_get_result(sport = sport,
+                            league = league,
+                            ep = "teams")
+  
   ## pull out the data
   gls <- parse_stattle(tmp_call, "team_game_logs")
   teams <- parse_stattle(tmp_call, "teams")
@@ -73,8 +78,9 @@ ss_team_logs <- function(sport = "hockey",
   venues <- parse_stattle(tmp_call, "venues")
   away_teams <- parse_stattle(tmp_call, "away_teams")
   home_teams <- parse_stattle(tmp_call, "home_teams")
+  divs <- parse_stattle(tmp_team, "divisions")
   
-  ## combine the teams
+  ## combine the teams for the opponent data
   teams_opp <- rbind(away_teams, home_teams)
   teams_opp <- unique(teams_opp)
   
@@ -83,6 +89,12 @@ ss_team_logs <- function(sport = "hockey",
   teams_opp <- clean_sideload_teams(teams_opp, prefix="opponent")
   games <- clean_sideload_games(games, prefix="game")
   venues <- clean_sideload_venues(venues, prefix="game_venue")
+  
+  ## add on the division data
+  divs_team <- clean_sideload_divisions(divs, prefix="team_division", drop_conf = TRUE)
+  divs_opp <- clean_sideload_divisions(divs, prefix="opponent_division", drop_conf = TRUE)
+  teams <- dplyr::left_join(teams, divs_team)
+  teams_opp <- dplyr::left_join(teams_opp, divs_opp)
   
   ## merge together for a big dataset
   gls <- dplyr::left_join(gls, teams)  ## append the gamelog's team info

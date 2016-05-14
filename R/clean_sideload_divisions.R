@@ -15,7 +15,7 @@
 #' @export
 #' clean_sideload_divisions
 
-clean_sideload_divisions <- function(x) {
+clean_sideload_divisions <- function(x, prefix="division", drop_conf=FALSE) {
   
   ## ensure a dataframe
   stopifnot(is.data.frame(x))
@@ -23,9 +23,17 @@ clean_sideload_divisions <- function(x) {
   ## keep the columns of interest
   x <- dplyr::select(x, id, name, conference_id)
   
+  ## conditionally drop the conference id
+  if (drop_conf) {
+    x <- dplyr::select(x, -conference_id)
+  }
+  
   ## rename the variables
-  x <- dplyr::rename(x, division_id = id)
-  x <- dplyr::rename(x, division_name = name)
+  #x <- dplyr::rename(x, division_id = id)
+  #x <- dplyr::rename(x, division_name = name)
+  
+  ## rename all of the variables
+  colnames(x) <- paste(prefix, colnames(x), sep="_")
   
   ## return the datafarme
   return(x)

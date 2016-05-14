@@ -4,7 +4,7 @@
 \alias{clean_sideload_divisions}
 \title{Clean up the sideloaded division data for easy merging with other sources of data.}
 \usage{
-clean_sideload_divisions(x)
+clean_sideload_divisions(x, prefix = "division", drop_conf = FALSE)
 }
 \value{
 a dataframe with the modified data cleaned up for merging
