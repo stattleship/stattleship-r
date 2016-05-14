@@ -2,8 +2,8 @@
 #' 
 #' A function to interface and make it easier to get team game logs for a team in a sport/league.
 #' 
-#' @param sport character. The sport of interest
-#' @param league character. The league to retrieve.  Currently MLB, NBA, NHL, and NFL are supported. 
+#' @param sport character. The sport of the team
+#' @param league character. The hockey league to retrieve.  Currently MLB, NBA, NHL, and NFL are supported. 
 #' NHL is default.
 #' @param team_id character.  Optional. The team id, can be in the form of the slug "nhl-bos".  
 #' Default is all teams (empty character).
