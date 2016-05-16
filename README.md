@@ -45,7 +45,7 @@ tripdubs <- ss_get_result(sport = sport, league = league, ep = ep,
 ```
 
 ## Next Steps
-Want more? Check out our available stats across an expanding number of sports at the [Stattleship Playbook](http://playbook.stattleship.com/) or [Stattleship blog](http://blog.stattleship.com/tag/api/).
+Want more? Check out our available stats across an expanding number of sports at the [Stattleship Developer API Documentation](http://developers.stattleship.com//) or [Stattleship blog](http://blog.stattleship.com/tag/api/).
 
 ## Style Guide
 We plan to follow [Hadley Wickham's R Style Guide](http://adv-r.had.co.nz/Style.html). Please follow these guidelines if you'd like to contribute!
