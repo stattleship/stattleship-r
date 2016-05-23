@@ -31,6 +31,7 @@ ss_team_logs <- function(sport = "hockey",
                          season_id = "nhl-2015-2016",
                          status = "ended",
                          game_id = "",
+			 since = "",
                          verbose = TRUE,
                          walk = TRUE) {
   
@@ -53,9 +54,13 @@ ss_team_logs <- function(sport = "hockey",
   if (nchar(team_id) > 0) {
     q_body = c(q_body, team_id = team_id)
   }
-  ## condidtioned on game
+  ## conditioned on game
   if (nchar(game_id) > 0) {
     q_body = c(q_body, game_id = game_id)
+  }
+  ## conditioned on since
+  if (nchar(since) > 0 ) {
+    q_body = c(q_body, since=since)
   }
   
   ## retrieve the players for a team in a league

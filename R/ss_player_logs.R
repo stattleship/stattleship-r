@@ -34,6 +34,7 @@ ss_player_logs <- function(sport = "hockey",
                            status='ended',
                            game_id = "",
                            player_id = "",
+			   since = "",
                            verbose = TRUE,
                            walk = TRUE) {
   
@@ -50,7 +51,8 @@ ss_player_logs <- function(sport = "hockey",
             length(team_id)==1,
             length(status)==1,
             length(game_id)==1,
-            length(player_id)==1)
+            length(player_id)==1,
+	    length(since)==1)
   
   ## put the team into a list if there was one specified
   q_body <- list()
@@ -67,6 +69,10 @@ ss_player_logs <- function(sport = "hockey",
   }
   if (nchar(game_id) > 0 ) {
     q_body = c(q_body, game_id=game_id)
+  }
+  ## conditioned on since
+  if (nchar(since) > 0 ) {
+    q_body = c(q_body, since=since)
   }
   
   ## retrieve the players for a team in a league
