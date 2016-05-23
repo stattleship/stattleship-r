@@ -25,6 +25,8 @@ Default is all teams (empty character).}
 
 \item{game_id}{character.  Optional. A specific game of interest.}
 
+\item{since}{character. A relative time range. e.g. 3 days ago.}
+
 \item{verbose}{logical.  TRUE will print messages to the console.  Default is TRUE.}
 
 \item{walk}{logical.  TRUE will retrieve all of the pages. Default is TRUE.}
