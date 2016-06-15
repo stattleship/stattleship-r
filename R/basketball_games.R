@@ -44,8 +44,13 @@ basketball_games <- function(league = "nba",
                    season_id = season_id,
                    interval_type = interval_type,
                    status =  status,
-                   since = since)
+                  )
     
+  }
+  
+  ## condition on since
+  if (nchar(since) > 0 ) {
+    q_body = c(q_body, since=since)
   }
   
   ## retrieve the teams
