@@ -33,8 +33,7 @@ basketball_games <- function(league = "nba",
             league %in% c("nba"),
             is.logical(verbose),
             is.character(team_id),
-            length(team_id)==1,
-            length(since)==1)
+            length(team_id)==1)
   
   ## put the team into a list if there was one specified
   q_body <- list()
