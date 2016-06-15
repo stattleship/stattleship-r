@@ -42,7 +42,7 @@ basketball_games <- function(league = "nba",
                    team_id = team_id,
                    season_id = season_id,
                    interval_type = interval_type,
-                   status =  status,
+                   status =  status
                   )
     
   }
