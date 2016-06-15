@@ -24,6 +24,7 @@ basketball_games <- function(league = "nba",
                              interval_type = "regularseason", 
                              season_id = "nba-2015-2016",
                              status = "ended",
+                             since = "",
                              verbose = TRUE) {
   
   ## quick validation
@@ -32,7 +33,8 @@ basketball_games <- function(league = "nba",
             league %in% c("nba"),
             is.logical(verbose),
             is.character(team_id),
-            length(team_id)==1)
+            length(team_id)==1),
+            length(since)==1)
   
   ## put the team into a list if there was one specified
   q_body <- list()
@@ -41,7 +43,8 @@ basketball_games <- function(league = "nba",
                    team_id = team_id,
                    season_id = season_id,
                    interval_type = interval_type,
-                   status =  status)
+                   status =  status,
+                   since = since)
     
   }
   
