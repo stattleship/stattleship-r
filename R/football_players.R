@@ -3,7 +3,7 @@
 #' A function to retrieve all of the players in football, for a given team during a current season and interval type.
 #' 
 #' @param league character. The hockey league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. nfl the default.
-#' @param team_id character.  The team id, can be in the form of the slug "nfl-ne".  Default is the Boston Patriots, nfl-ne.
+#' @param team_id character.  The team id, can be in the form of the slug "nfl-ne".  Default is the New England Patriots, nfl-ne.
 #' @param interval_type character.  The season interval.  Default is regularseason.
 #' @param season_id character.  The season.  Default is nfl-2015-2016.
 #' @param verbose logical.  TRUE will print messages to the console.  Default is TRUE.

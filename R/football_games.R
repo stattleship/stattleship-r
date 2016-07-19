@@ -3,7 +3,7 @@
 #' A function to retrieve all of the available football games for a specified team.
 #' 
 #' @param league character. The football league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. nfl is default.
-#' @param team_id character.  The team id, can be in the form of the slug "nfl-ne".  Default is the Boston Red Sox, nfl-ne.
+#' @param team_id character.  The team id, can be in the form of the slug "nfl-ne".  Default is the New England Patriots, nfl-ne.
 #' @param interval_type character.  The season interval.  Default is regularseason.
 #' @param season_id character.  The season.  Default is nfl-2015-2016.
 #' @param status character.  That status of the game.  Default is ended.

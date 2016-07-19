@@ -3,7 +3,7 @@
 #' A function to retrieve all of the available basketball games for a specified team.
 #' 
 #' @param league character. The basketball league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. NBA is default.
-#' @param team_id character.  The team id, can be in the form of the slug "nba-bos".  Default is the Boston Red Sox, nba-bos.
+#' @param team_id character.  The team id, can be in the form of the slug "nba-bos".  Default is the Boston Celtics, nba-bos.
 #' @param interval_type character.  The season interval.  Default is regularseason.
 #' @param season_id character.  The season.  Default is nba-2015-2016.
 #' @param status character.  That status of the game.  Default is ended.

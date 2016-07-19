@@ -5,7 +5,7 @@
 #' @param league character. The football league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. nfl is default.
 #' @param team_id character.  The team id, can be in the form of the slug "nfl-ne".  Default is the New England Patriots, nfl-ne.
 #' @param interval_type character.  The season interval.  Default is regularseason.
-#' @param season_id character.  The season.  Default is nfl-2015.
+#' @param season_id character.  The season.  Default is nfl-2015-2016.
 #' @param verbose logical.  TRUE will print messages to the console.  Default is TRUE.
 #' 
 #' @return a dataframe of the football injuries for the specified team.
