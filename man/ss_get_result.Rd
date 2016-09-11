@@ -34,7 +34,7 @@ A simple, generic function to query data from the Stattleship API
 \examples{
 \dontrun{
 set_token("insert-your-token-here")
-results <- ss_get_result(sport="hockey", 
+results <- ss_get_result(sport="hockey",
                          league="nhl",
                          ep = "teams",
                          query = list()
