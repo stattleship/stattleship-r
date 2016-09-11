@@ -12,6 +12,5 @@ Depends:
     data.table
 License: MIT + file LICENSE
 LazyData: true
-RoxygenNote: 5.0.1
-Suggests:
-    testthat
+RoxygenNote: 5.0.1.9000
+Suggests: testthat
