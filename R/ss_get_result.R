@@ -152,7 +152,7 @@ ss_get_result <- function(token,
             league %in% c("nhl", "nba", "nfl", "mlb"))
 
   ## build the URL and the endpoint
-  URL <- sprintf("https://www.stattleship.com/%s/%s/%s", sport, league, ep)
+  URL <- sprintf("https://api.stattleship.com/%s/%s/%s", sport, league, ep)
 
   ## the accept parameters.  Is there a better way to do this?
   ACCEPT <- sprintf("application/vnd.stattleship.com; version=%d", version)
