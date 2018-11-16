@@ -1,30 +1,29 @@
-#' Retrieve the available hockey teams
+#' Retrieve the available baseball teams in a given league
 #' 
-#' A function to retrieve all of the available hockey teams for a specified league.
+#' A function to retrieve all of the available baseball teams for a specified league.
 #' 
-#' @param league character. The hockey league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. NHL is default.
+#' @param league character. The baseball league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. MLB is default.
 #' @param verbose logical.  TRUE will print messages to the console.  Default is TRUE.
 #' 
-#' @return a dataframe of the hockey teams for the specified league.
+#' @return a dataframe of the baseball teams for the specified league.
 #' 
 #' @examples 
 #' \dontrun{
 #' set_token("insert-your-token-here")
-#' results <- hockey_teams(league="nhl")
+#' results <- baseball_teams(league="mlb")
 #' }
 #' @export
-#' hockey_teams
+#' baseball_teams
 
-hockey_teams <- function(league="nhl", verbose=TRUE) {
-  
+baseball_teams <- function(league="mlb", verbose=TRUE) {
   ## quick validation
   league <- tolower(league)
   stopifnot(is.character(league),
-            league %in% c("nhl"),
+            league %in% c("mlb"),
             is.logical(verbose))
   
   ## retrieve the teams
-  tmp_call <- ss_get_result(sport = "hockey", 
+  tmp_call <- ss_get_result(sport = "baseball", 
                             league = league, 
                             ep = "teams",
                             walk = T, 

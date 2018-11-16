@@ -2,19 +2,27 @@
 % Please edit documentation in R/hockey_games.R
 \name{hockey_games}
 \alias{hockey_games}
-\title{Retrieve the available hockey games for a given team}
+\title{Retrieve the available hockey games for a given league, team and season during a specific time interval.}
 \usage{
-hockey_games(league = "nhl", team_id = "nhl-bos", verbose = TRUE)
+hockey_games(league = "nhl", team_id = "nhl-bos",
+  interval_type = "regularseason", season_id = "nhl-2015-2016",
+  status = "ended", verbose = TRUE)
 }
 \arguments{
-\item{league}{character. The hockey league to retrieve.  Currently only the NHL is supported, and is the default.}
+\item{league}{character. The hockey league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. NHL is default.}
 
 \item{team_id}{character.  The team id, can be in the form of the slug "nhl-bos".  Default is the Boston Bruins, nhl-bos.}
+
+\item{interval_type}{character.  The season interval.  Default is regularseason.}
+
+\item{season_id}{character.  The season.  Default is nhl-2015-2016.}
+
+\item{status}{character.  That status of the game.  Default is ended.}
 
 \item{verbose}{logical.  TRUE will print messages to the console.  Default is TRUE.}
 }
 \value{
-a dataframe of the hockey teams for the specified league.
+a dataframe of the hockey games for the specified league, team, and season.
 }
 \description{
 A function to retrieve all of the available hockey games for a specified team.

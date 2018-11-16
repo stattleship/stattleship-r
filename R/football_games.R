@@ -1,35 +1,35 @@
-#' Retrieve the available hockey games for a given league, team and season during a specific time interval.
+#' Retrieve the available football games for a given league, team and season during a specific time interval.
 #' 
-#' A function to retrieve all of the available hockey games for a specified team.
+#' A function to retrieve all of the available football games for a specified team.
 #' 
-#' @param league character. The hockey league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. NHL is default.
-#' @param team_id character.  The team id, can be in the form of the slug "nhl-bos".  Default is the Boston Bruins, nhl-bos.
+#' @param league character. The football league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. nfl is default.
+#' @param team_id character.  The team id, can be in the form of the slug "nfl-ne".  Default is the New England Patriots, nfl-ne.
 #' @param interval_type character.  The season interval.  Default is regularseason.
-#' @param season_id character.  The season.  Default is nhl-2015-2016.
+#' @param season_id character.  The season.  Default is nfl-2015-2016.
 #' @param status character.  That status of the game.  Default is ended.
 #' @param verbose logical.  TRUE will print messages to the console.  Default is TRUE.
 #' 
-#' @return a dataframe of the hockey games for the specified league, team, and season.
+#' @return a dataframe of the football games for the specified league.
 #' 
 #' @examples 
 #' \dontrun{
 #' set_token("insert-your-token-here")
-#' results <- hockey_games(league="nhl", team_id="nhl-bos")
+#' results <- football_games(league="nfl", team_id="nfl-ne")
 #' }
 #' @export
-#' hockey_games
+#' football_games
 
-hockey_games <- function(league = "nhl", 
-                         team_id = "nhl-bos", 
-                         interval_type = "regularseason", 
-                         season_id = "nhl-2015-2016",
-                         status = "ended",
-                         verbose = TRUE) {
+football_games <- function(league = "nfl", 
+                           team_id = "nfl-ne", 
+                           interval_type = "week", 
+                           season_id = "nfl-2015-2016",
+                           status = "ended",
+                           verbose = TRUE) {
   
   ## quick validation
   league <- tolower(league)
   stopifnot(is.character(league),
-            league %in% c("nhl"),
+            league %in% c("nfl"),
             is.logical(verbose),
             is.character(team_id),
             length(team_id)==1)
@@ -41,12 +41,12 @@ hockey_games <- function(league = "nhl",
                    team_id = team_id,
                    season_id = season_id,
                    interval_type = interval_type,
-                   status = status)
+                   status =  status)
     
   }
   
   ## retrieve the teams
-  tmp_call <- ss_get_result(sport = "hockey", 
+  tmp_call <- ss_get_result(sport = "football", 
                             league = league,
                             ep = "games",
                             query = q_body,

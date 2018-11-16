@@ -1,7 +1,7 @@
 Package: stattleshipR
 Title: R Interface to Query the Stattleship API
-Version: 0.0.5
-Author: Stattleship, Brock Tibert, Tanya Cashorali, David Thyresson
+Version: 1.0.0
+Author: Brock Tibert, Tanya Cashorali, David Thyresson
 Maintainer: Tanya Cashorali <tanyacash@gmail.com>
 Description: Provides an easy to use R wrapper around the Stattleship API that
     enables users to bring useful sports stats directly into their R environment.
@@ -13,4 +13,7 @@ Depends:
 License: MIT + file LICENSE
 LazyData: true
 RoxygenNote: 5.0.1.9000
-Suggests: testthat
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

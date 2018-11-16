@@ -1,0 +1,219 @@
+---
+author: "@brocktibert"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r echo=F, warning=FALSE, message=FALSE}
+options(stringsAsFactors=FALSE)
+knitr::opts_chunk$set(comment = NA)
+knitr::opts_chunk$set(warning = F)
+knitr::opts_chunk$set(message = F)
+
+## load the packages
+library(stattleshipR)
+library(dplyr)
+
+```
+
+## stattleshipR
+
+This document is meant to be a quick start guide and introduce the new features added to the package in version `1.0`.  For an excellent overview of what is possible check out this [great post](http://blog.stattleship.com/stop-scraping-for-sports-data-start-stattleshipping/).
+
+## Before you begin
+
+
+If you don't already have an API token, you will need to signup for our API in order to use the `stattleshipR` package.  Please visit [our site](https://www.stattleship.com/) to get started.  
+
+Once you have a token, simply install the package with:
+
+```{r eval=FALSE}
+install.packages("devtools")  
+devtools::install_github("stattleship/stattleship-r")
+
+## Load the stattleshipR package
+library(stattleshipR)  
+```
+
+
+Lastly, you will need to initialize your token with `set_token`. 
+
+```{r eval=FALSE}
+set_token("your-API-token-goes-here") 
+```
+
+
+It's worth nothing that you may want to store your token as an environment variable.  In that case, you can load it with:
+
+```{r}
+set_token(Sys.getenv("STATTLE_TOKEN"))
+```
+
+where `STATTLE_TOKEN` is the environment variable on your system.
+
+We also recommend the `dplyr`.  
+
+```{r eval=FALSE}
+library(dplyr)
+```
+
+If you don't have `dplyr`, you can install it with `install.packages(dplyr)`.
+
+## What's new
+
+As noted in Tanya's post, you see that the workhorse of the package is `ss_get_result` which allows you to access our entire API.  However, it was obvious that we wanted to make a few things easier, especially for common use-cases.  The following helpers were added in version `1.0`.
+
+#### General Helpers  
+
+-  `list_sideload`  
+-  `parse_stattle`
+-  `ss_keep_cols`
+
+#### Sport-specific helpers
+
+-  `*_teams`  
+-  `*_games`  
+-  `*_players`  
+-  `*_injuries`  
+
+where `*` is `hockey`, `football`, `baseball`, and `basketball`.  For example, `hockey_injuries` or `baseball_teams`.
+
+#### Game logs
+
+We also added helpers around team and player game logs, respectively.
+
+- `ss_team_logs`  
+- `ss_player_logs`
+
+
+## `list_sideload`
+
+In this release, we added `list_sideload` which allows you to evaluate the datasets that get returned from a call to `ss_get_result`.  
+
+Let's make a call to get all of the teams in MLB.
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE, error= FALSE, comment=NA}
+teams_raw <- ss_get_result(sport="baseball", league = "mlb", ep = "teams")
+```
+
+We added`list_sideload` to view the datasets that come back from `ss_get_result`.  
+
+```{r}
+list_sideload(teams_raw)
+```
+
+In this particular case, not only did we get return the `teams`, but we have other data as well, which can be used to merge on additional facts and features to our data.  
+
+
+## `parse_stattle`  
+
+Previously, calls to `ss_get_result` would require that you do the `do.call` dance to pull out `data_frames` of data.  Below is an example of using `do.call` to grab the `teams` dataset, and printing the first few team hashtags.
+
+```{r}
+mlb_teams <- do.call('rbind', lapply(teams_raw, function(x) x$teams))
+head(mlb_teams$hashtag)
+```
+
+But now, you can do this more succinctly with `parse_stattle`
+
+```{r}
+mlb_teams2 <- parse_stattle(teams_raw, "teams")
+head(mlb_teams2$hashtag)
+```
+
+
+## Sport specific helpers
+
+As noted above, we added helpers around the `teams`, `games`, `players` and `injuries` endpoints in order to make it easier to extract the data of interest.  In short, you won't have to worry about merging a variety of data; we simply return a complete dataset for your to work with.
+
+For example, instead of using `ss_get_result` to pull out the teams in MLB, you can use `baseball_teams`
+
+```{r}
+mlb_teams3 <- baseball_teams()
+head(mlb_teams3$team_hashtag)
+```
+
+You will notice above that you had to change `hashtag` to `team_hashtag`.  This is an artifact of the merging process in order to retain the variables for you to use.  
+
+With that in mind, let's look at all of the data that came back in that simple call
+
+```{r}
+colnames(mlb_teams3)
+```
+
+How about isolating the patriots games, both home and away, in cloudy games.
+
+```{r}
+## get the data with the defaults set to New England
+pats_games <- football_games() %>% 
+  filter(weather_conditions=="cloudy")
+
+## keep columns and print a few rows
+tbl_df(pats_games) %>% 
+  select(interval, on, score_differential) %>% 
+  print(n=5)
+```
+
+The simply syntax is `*_teams/games/players/injuries` where `*` is the sport of interest.
+
+
+## `ss_team_logs`
+
+In this release, we also added a helper to grab a team's game logs.  This can be used across all for sports and leagues currently supported.  
+
+For example, let's pull down the Celtic's game logs for the 2015-2016 regular season.
+
+```{r}
+celts_gls <- ss_team_logs(sport="basketball", 
+                          league="nba", 
+                          team_id="nba-bos", 
+                          season_id="nba-2015-2016")
+```
+
+What do we have for columns of data?
+
+```{r}
+colnames(celts_gls)
+```
+
+You can see that we have quite a bit of data.  Under the hood, we are binding on number of datasets, including information about the teams as well as the game itself, including the venue!
+
+
+## `ss_keep_cols`
+
+When you start to dig into game logs, you will probably want to keep certain columns of interest.  Because we didn't want limit the columns for you, more than likely you will want to make heavy use of `ss_keep_cols`, which will return the same dataset, but keep only the columns of interest.  All that you need to do is supply a character vector of column names.
+
+Going back to the Celtics game logs, we can restrict all of that data to just a few columns.
+
+```{r}
+mycols <- c("game_label", "is_home_team", "points_scored_total", "game_venue_name")
+celts_limited_cols <- ss_keep_cols(celts_gls, mycols)
+head(celts_limited_cols)
+```
+
+By not restricting the columns, the `ss_team_logs` we are able to keep this call the API sport agnostic.  You can use the same syntax for any of the leagues that we support.
+
+## `ss_player_logs`
+
+Just like team logs, we also have a helper `ss_player_logs` which enables you to get the game logs at the player level.  
+
+Below, we are going to get the game logs for Brad Marchand.
+
+```{r}
+marchy <- ss_player_logs(player_id="nhl-brad-marchand")
+```
+
+The above col is only supplying one parameter, but you should look at the available options via `?ss_player_logs`.
+
+As with `ss_team_logs`, we return a larger dataframe with a number of data elements merged on for you already, including information about the game, the venue, and the player's biographical info.
+
+Again, we can simply use `ss_keep_cols` to filter the columns of interest.
+
+```{r}
+mycols <- c("game_on", "goals", "opponent_slug", "opponent_color", "game_attendance", "game_venue")
+ss_keep_cols(marchy, mycols) %>% head
+```

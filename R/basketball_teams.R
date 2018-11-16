@@ -1,30 +1,29 @@
-#' Retrieve the available hockey teams
+#' Retrieve the available basketball teams in a given league
 #' 
-#' A function to retrieve all of the available hockey teams for a specified league.
+#' A function to retrieve all of the available basketball teams for a specified league.
 #' 
-#' @param league character. The hockey league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. NHL is default.
+#' @param league character. The basketball league to retrieve.  Currently MLB, NBA, NHL, and MLB are supported. NBA is default.
 #' @param verbose logical.  TRUE will print messages to the console.  Default is TRUE.
 #' 
-#' @return a dataframe of the hockey teams for the specified league.
+#' @return a dataframe of the basketball teams for the specified league.
 #' 
 #' @examples 
 #' \dontrun{
 #' set_token("insert-your-token-here")
-#' results <- hockey_teams(league="nhl")
+#' results <- basketball_teams(league="nba")
 #' }
 #' @export
-#' hockey_teams
+#' basketball_teams
 
-hockey_teams <- function(league="nhl", verbose=TRUE) {
-  
+basketball_teams <- function(league="nba", verbose=TRUE) {
   ## quick validation
   league <- tolower(league)
   stopifnot(is.character(league),
-            league %in% c("nhl"),
+            league %in% c("nba"),
             is.logical(verbose))
   
   ## retrieve the teams
-  tmp_call <- ss_get_result(sport = "hockey", 
+  tmp_call <- ss_get_result(sport = "basketball", 
                             league = league, 
                             ep = "teams",
                             walk = T, 
@@ -49,9 +48,6 @@ hockey_teams <- function(league="nhl", verbose=TRUE) {
   
   ## ensure a dataframe
   stopifnot(is.data.frame(teams))
-  
-  ## ensure unique
-  teams <- unique(teams)
   
   ## return the datafarme
   return(teams)

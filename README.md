@@ -13,6 +13,14 @@ We're gonna need a bigger :boat:!
 ## Install
 `devtools::install_github("stattleship/stattleship-r")`
 
+## Quick Start
+
+To get started quickly, check out [this post](http://blog.stattleship.com/stop-scraping-for-sports-data-start-stattleshipping/) which covers everything that you need.
+
+## Package Vignettes
+
+To view the package vignettes, simply use `browseVignettes(package="stattleshipR")`.
+
 ## Getting Started
 
 * Obtain an access TOKEN from [stattleship.com](https://www.stattleship.com/).
